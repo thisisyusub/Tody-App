@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'core/theme/app_typography.dart';
+import 'core/theme/app_colors.dart';
 import 'presentation/pages/splash_page.dart';
 
 void main() {
@@ -15,8 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      themeMode: ThemeMode.light,
       theme: ThemeData(
-        fontFamily: AppTypography.fontFamily,
+        scaffoldBackgroundColor: AppColors.surface,
+      ),
+      darkTheme: ThemeData(
+        scaffoldBackgroundColor: DarkAppColors.surface,
       ),
       home: const SplashPage(),
     );
