@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/core/theme/app_typography.dart';
 
+import 'core/constants/routes.dart';
 import 'core/theme/app_colors.dart';
+import 'core/theme/app_typography.dart';
+import 'presentation/pages/login_page.dart';
+import 'presentation/pages/onboarding_page.dart';
 import 'presentation/pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -57,7 +64,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SplashPage(),
+      initialRoute: Routes.splash.path,
+      routes: {
+        Routes.splash.path: (context) => const SplashPage(),
+        Routes.onboarding.path: (context) => const OnBoardingPage(),
+        Routes.login.path: (context) => const LoginPage(),
+      },
     );
   }
 }

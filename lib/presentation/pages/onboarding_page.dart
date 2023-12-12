@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/core/constants/assets.dart';
-import 'package:tody_app/core/theme/app_colors.dart';
-import 'package:tody_app/core/theme/app_typography.dart';
-import 'package:tody_app/presentation/widgets/app_action_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class OnBoardingPage extends StatelessWidget {
+import '../../core/constants/app_keys.dart';
+import '../../core/constants/assets.dart';
+import '../../core/constants/routes.dart';
+import '../widgets/app_action_button.dart';
+
+class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
 
+  @override
+  State<OnBoardingPage> createState() => _OnBoardingPageState();
+}
+
+class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +37,17 @@ class OnBoardingPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 80),
                   AppActionButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      final preferences = await SharedPreferences.getInstance();
+                      await preferences.setBool(AppKeys.isAppOpened, true);
+
+                      if (mounted) {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          Routes.login.path,
+                        );
+                      }
+                    },
                     title: 'Get Started',
                   ),
                 ],
