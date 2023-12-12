@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../core/constants/routes.dart';
-import 'login_page.dart';
 
 import '../../core/constants/app_keys.dart';
 import '../../core/constants/assets.dart';
-import 'onboarding_page.dart';
+import '../../core/constants/routes.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
