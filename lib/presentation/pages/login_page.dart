@@ -1,8 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/app_colors.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,9 +18,52 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+
+  void _login() async {
+    try {
+      final username = _usernameController.text.trim();
+      final password = _passwordController.text.trim();
+
+      // http://localhost:8080/auth/login - POST
+      /*
+    {
+    "userName": "Thisisyusub",
+    "password": "123456"
+    }*/
+
+      final uri = Uri.http('localhost:8080', '/auth/login');
+      final response = await http.post(
+        uri,
+        body: jsonEncode({
+          'userName': username,
+          'password': password,
+        }),
+      );
+
+      if (!mounted) return;
+
+      if (response.statusCode == 200) {
+        Navigator.of(context).pushReplacementNamed(Routes.home.path);
+      } else {
+        final error = response.body;
+
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(error),
+              backgroundColor: Colors.redAccent,
+              behavior: SnackBarBehavior.floating,
+            ),
+          );
+      }
+    } catch (e) {
+      debugPrintThrottled(e.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,82 +79,85 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  enabledBorder: border,
-                  focusedBorder: border,
-                  errorBorder: errorBorder,
-                  focusedErrorBorder: errorBorder,
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Email is required';
-                  }
-
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              TextFormField(
-                controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  enabledBorder: border,
-                  focusedBorder: border,
-                  errorBorder: errorBorder,
-                  focusedErrorBorder: errorBorder,
-                  errorMaxLines: 2,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
+    return TextFieldTapRegion(
+      onTapInside: (_) {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Login'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    labelText: 'Username',
+                    enabledBorder: border,
+                    focusedBorder: border,
+                    errorBorder: errorBorder,
+                    focusedErrorBorder: errorBorder,
                   ),
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Username is required';
+                    }
+
+                    return null;
+                  },
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty || value.length < 6) {
-                    return 'Password is required and must be at least 6 characters';
-                  }
+                const SizedBox(height: 24),
+                TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    enabledBorder: border,
+                    focusedBorder: border,
+                    errorBorder: errorBorder,
+                    focusedErrorBorder: errorBorder,
+                    errorMaxLines: 2,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty || value.length < 6) {
+                      return 'Password is required and must be at least 6 characters';
+                    }
 
-                  return null;
-                },
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: !_isPasswordVisible,
-                obscuringCharacter: '*',
-              ),
-              const SizedBox(height: 32),
-              AppActionButton(
-                title: 'Login',
-                onPressed: () {
-                  _formKey.currentState!.save();
-                  if (_formKey.currentState!.validate()) {
-                    final email = _emailController.text;
-                    final password = _passwordController.text;
-
-                    print('Email: $email, Password: $password');
-                  }
-                },
-              ),
-            ],
+                    return null;
+                  },
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: !_isPasswordVisible,
+                  obscuringCharacter: '*',
+                ),
+                const SizedBox(height: 32),
+                AppActionButton(
+                  title: 'Login',
+                  onPressed: () {
+                    _formKey.currentState!.save();
+                    if (_formKey.currentState!.validate()) {
+                      _login();
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -115,8 +166,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
+    _formKey.currentState?.dispose();
     super.dispose();
   }
 }

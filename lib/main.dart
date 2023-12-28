@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:tody_app/presentation/pages/home_page.dart';
 
 import 'core/constants/routes.dart';
 import 'core/theme/app_colors.dart';
@@ -69,6 +72,7 @@ class _MyAppState extends State<MyApp> {
         Routes.splash.path: (context) => const SplashPage(),
         Routes.onboarding.path: (context) => const OnBoardingPage(),
         Routes.login.path: (context) => const LoginPage(),
+        Routes.home.path: (context) => const HomePage(),
       },
     );
   }
