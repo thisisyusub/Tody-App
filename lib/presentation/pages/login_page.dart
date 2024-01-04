@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     "password": "123456"
     }*/
 
-      final uri = Uri.http('localhost:8080', '/auth/login');
+      final uri = Uri.http('192.168.100.67:8080', '/auth/login');
       final response = await http.post(
         uri,
         body: jsonEncode({
@@ -48,9 +48,11 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
 
       if (response.statusCode == 200) {
+        if (!context.mounted) return;
+
         await _persistToken(username, password);
 
-        if (!context.mounted) return;
+        if (!mounted) return;
         Navigator.of(context).pushReplacementNamed(Routes.home.path);
       } else {
         final error = response.body;
