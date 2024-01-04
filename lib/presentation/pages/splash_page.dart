@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/constants/app_keys.dart';
@@ -16,7 +17,22 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    _checkIfAppOpenedPreviously();
+    _checkAuth();
+  }
+
+  void _checkAuth() async {
+    await Future.delayed(const Duration(seconds: 1));
+    const secureStorage = FlutterSecureStorage();
+    final token = await secureStorage.read(key: AppKeys.token);
+
+    if (token != null && mounted) {
+      Navigator.pushReplacementNamed(
+        context,
+        Routes.home.path,
+      );
+    } else {
+      _checkIfAppOpenedPreviously();
+    }
   }
 
   void _checkIfAppOpenedPreviously() async {

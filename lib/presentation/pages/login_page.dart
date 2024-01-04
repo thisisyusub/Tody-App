@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tody_app/core/constants/app_keys.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/app_colors.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
@@ -46,6 +48,9 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
 
       if (response.statusCode == 200) {
+        await _persistToken(username, password);
+
+        if (!context.mounted) return;
         Navigator.of(context).pushReplacementNamed(Routes.home.path);
       } else {
         final error = response.body;
@@ -63,6 +68,13 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       debugPrintThrottled(e.toString());
     }
+  }
+
+  Future<void> _persistToken(String username, String password) async {
+    final basicAuthConfig = '$username:$password';
+    final token = base64Encode(basicAuthConfig.codeUnits);
+    final secureStorage = FlutterSecureStorage();
+    await secureStorage.write(key: AppKeys.token, value: token);
   }
 
   @override
