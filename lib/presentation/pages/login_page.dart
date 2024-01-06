@@ -6,7 +6,6 @@ import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/login/login_state.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/app_colors.dart';
-import 'package:tody_app/presentation/pages/home_page.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
 
 class LoginPage extends StatefulWidget {

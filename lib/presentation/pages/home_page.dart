@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/core/constants/app_keys.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/counter_notifier.dart';

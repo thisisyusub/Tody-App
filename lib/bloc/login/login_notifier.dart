@@ -16,13 +16,11 @@ class LoginNotifier extends ChangeNotifier {
     required String password,
   }) async {
     try {
-      _loginState = LoadingState();
-      notifyListeners();
+      // _loginState = LoadingState();
+      // notifyListeners();
 
-      _loginState = LoadingState();
-      notifyListeners();
-
-      await Future.delayed(const Duration(seconds: 2));
+      // _loginState = LoadingState();
+      // notifyListeners();
 
       final uri = Uri.http('192.168.100.67:8080', '/auth/login');
       final response = await http.post(
@@ -39,8 +37,11 @@ class LoginNotifier extends ChangeNotifier {
         notifyListeners();
       } else {
         final error = response.body;
-        _loginState = ErrorState(error);
-        notifyListeners();
+
+        if (_loginState != ErrorState(error)) {
+          _loginState = ErrorState(error);
+          notifyListeners();
+        }
       }
     } catch (e) {
       _loginState = ErrorState(e.toString());
