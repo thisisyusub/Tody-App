@@ -1,7 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tody_app/bloc/login/login_notifier.dart';
+import 'package:tody_app/counter_notifier.dart';
 import 'package:tody_app/presentation/pages/home_page.dart';
 import 'package:tody_app/presentation/settings/settings_scope.dart';
 import 'package:tody_app/presentation/settings/settings_scope_widget.dart';
@@ -36,60 +37,66 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        return MaterialApp(
-          title: 'Flutter Demo',
-          themeMode: SettingsScope.of(context)!.themeMode,
-          theme: ThemeData(
-            brightness: Brightness.light,
-            textTheme: TextTheme(
-              displaySmall: AppTypography.displaySmall.w400.copyWith(
-                color: AppColors.onSurface,
+    return ChangeNotifierProvider<CounterNotifier>(
+      create: (context) => CounterNotifier(),
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            themeMode: SettingsScope.of(context)!.themeMode,
+            theme: ThemeData(
+              brightness: Brightness.light,
+              textTheme: TextTheme(
+                displaySmall: AppTypography.displaySmall.w400.copyWith(
+                  color: AppColors.onSurface,
+                ),
+                titleMedium: AppTypography.titleMedium.w500.copyWith(
+                  color: AppColors.primaryVariant,
+                ),
               ),
-              titleMedium: AppTypography.titleMedium.w500.copyWith(
-                color: AppColors.primaryVariant,
-              ),
-            ),
-            scaffoldBackgroundColor: AppColors.surface,
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                textStyle: AppTypography.labelLarge.w500.copyWith(
-                  color: AppColors.onPrimary,
+              scaffoldBackgroundColor: AppColors.surface,
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  textStyle: AppTypography.labelLarge.w500.copyWith(
+                    color: AppColors.onPrimary,
+                  ),
                 ),
               ),
             ),
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            textTheme: TextTheme(
-              displaySmall: AppTypography.displaySmall.w400.copyWith(
-                color: DarkAppColors.onSurface,
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              textTheme: TextTheme(
+                displaySmall: AppTypography.displaySmall.w400.copyWith(
+                  color: DarkAppColors.onSurface,
+                ),
+                titleMedium: AppTypography.titleMedium.w500.copyWith(
+                  color: DarkAppColors.primaryVariant,
+                ),
               ),
-              titleMedium: AppTypography.titleMedium.w500.copyWith(
-                color: DarkAppColors.primaryVariant,
-              ),
-            ),
-            scaffoldBackgroundColor: DarkAppColors.surface,
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: DarkAppColors.primary,
-                textStyle: AppTypography.labelLarge.w500.copyWith(
-                  color: AppColors.onPrimary,
+              scaffoldBackgroundColor: DarkAppColors.surface,
+              elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: DarkAppColors.primary,
+                  textStyle: AppTypography.labelLarge.w500.copyWith(
+                    color: AppColors.onPrimary,
+                  ),
                 ),
               ),
             ),
-          ),
-          initialRoute: Routes.splash.path,
-          routes: {
-            Routes.splash.path: (context) => const SplashPage(),
-            Routes.onboarding.path: (context) => const OnBoardingPage(),
-            Routes.login.path: (context) => const LoginPage(),
-            Routes.home.path: (context) => const HomePage(),
-          },
-        );
-      },
+            initialRoute: Routes.splash.path,
+            routes: {
+              Routes.splash.path: (context) => const SplashPage(),
+              Routes.onboarding.path: (context) => const OnBoardingPage(),
+              Routes.login.path: (context) => ChangeNotifierProvider(
+                    create: (context) => LoginNotifier(),
+                    child: const LoginPage(),
+                  ),
+              Routes.home.path: (context) => const HomePage(),
+            },
+          );
+        },
+      ),
     );
   }
 }

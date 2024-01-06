@@ -21,7 +21,6 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void _checkAuth() async {
-    await Future.delayed(const Duration(seconds: 2));
     const secureStorage = FlutterSecureStorage();
     final token = await secureStorage.read(key: AppKeys.token);
 

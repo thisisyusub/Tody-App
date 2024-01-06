@@ -1,15 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:tody_app/core/constants/app_keys.dart';
+import 'package:provider/provider.dart';
+import 'package:tody_app/bloc/login/login_notifier.dart';
+import 'package:tody_app/bloc/login/login_state.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/app_colors.dart';
+import 'package:tody_app/presentation/pages/home_page.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
-import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -23,64 +21,37 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+  late LoginNotifier _loginNotifier;
 
-  void _login() async {
-    try {
-      final username = _usernameController.text.trim();
-      final password = _passwordController.text.trim();
+  @override
+  void initState() {
+    super.initState();
 
-      // http://localhost:8080/auth/login - POST
-      /*
-    {
-    "userName": "Thisisyusub",
-    "password": "123456"
-    }*/
+    _loginNotifier = context.read<LoginNotifier>();
 
-      final uri = Uri.http('192.168.100.67:8080', '/auth/login');
-      final response = await http.post(
-        uri,
-        body: jsonEncode({
-          'userName': username,
-          'password': password,
-        }),
-      );
+    _loginNotifier.addListener(
+      () {
+        final loginState = _loginNotifier.loginState;
 
-      if (!mounted) return;
-
-      if (response.statusCode == 200) {
-        if (!context.mounted) return;
-
-        await _persistToken(username, password);
-
-        if (!mounted) return;
-        Navigator.of(context).pushReplacementNamed(Routes.home.path);
-      } else {
-        final error = response.body;
-
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
+        if (loginState is SuccessState) {
+          Navigator.of(context).pushReplacementNamed(Routes.home.path);
+        } else if (loginState is ErrorState) {
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(error),
-              backgroundColor: Colors.redAccent,
-              behavior: SnackBarBehavior.floating,
+              content: Text(
+                loginState.errorMessage,
+              ),
             ),
           );
-      }
-    } catch (e) {
-      debugPrintThrottled(e.toString());
-    }
-  }
-
-  Future<void> _persistToken(String username, String password) async {
-    final basicAuthConfig = '$username:$password';
-    final token = base64Encode(basicAuthConfig.codeUnits);
-    final secureStorage = FlutterSecureStorage();
-    await secureStorage.write(key: AppKeys.token, value: token);
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final loginState = context.watch<LoginNotifier>().loginState;
+
     final border = OutlineInputBorder(
       borderSide: BorderSide(
         color: AppColors.onPrimary,
@@ -161,15 +132,21 @@ class _LoginPageState extends State<LoginPage> {
                   obscuringCharacter: '*',
                 ),
                 const SizedBox(height: 32),
-                AppActionButton(
-                  title: 'Login',
-                  onPressed: () {
-                    _formKey.currentState!.save();
-                    if (_formKey.currentState!.validate()) {
-                      _login();
-                    }
-                  },
-                ),
+                if (loginState is LoadingState)
+                  const CircularProgressIndicator()
+                else
+                  AppActionButton(
+                    title: 'Login',
+                    onPressed: () {
+                      _formKey.currentState!.save();
+                      if (_formKey.currentState!.validate()) {
+                        context.read<LoginNotifier>().login(
+                              username: _usernameController.text.trim(),
+                              password: _passwordController.text.trim(),
+                            );
+                      }
+                    },
+                  ),
               ],
             ),
           ),
