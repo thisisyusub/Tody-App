@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tody_app/core/constants/app_keys.dart';
-import 'package:tody_app/presentation/settings/settings_scope.dart';
+import 'settings_scope.dart';
+
+import '../../core/constants/app_keys.dart';
 
 class SettingsScopeWidget extends StatefulWidget {
   const SettingsScopeWidget({
@@ -10,6 +11,7 @@ class SettingsScopeWidget extends StatefulWidget {
     required this.preferences,
   });
 
+  /// ThemeMode
   final Widget child;
   final SharedPreferences preferences;
 
@@ -22,9 +24,11 @@ class SettingsScopeWidget extends StatefulWidget {
 }
 
 class SettingsScopeWidgetState extends State<SettingsScopeWidget> {
+  /// ThemeMode
   ThemeMode? _themeMode;
 
-  void toggleTheme() async {
+  /// ThemeMode
+  void toggleThemeMode() async {
     _themeMode =
         _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
 
@@ -39,7 +43,6 @@ class SettingsScopeWidgetState extends State<SettingsScopeWidget> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
-
     setState(() {
       _themeMode = widget.preferences.getBool(AppKeys.isDarkMode) == true
           ? ThemeMode.dark

@@ -1,12 +1,13 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tody_app/bloc/login/login_notifier.dart';
-import 'package:tody_app/bloc/login/login_state.dart';
-import 'package:tody_app/core/constants/routes.dart';
-import 'package:tody_app/core/theme/app_colors.dart';
-import 'package:tody_app/presentation/widgets/app_action_button.dart';
+
+import '../../bloc/login/login_notifier.dart';
+import '../../bloc/login/login_state.dart';
+import '../../core/constants/routes.dart';
+import '../settings/settings_scope.dart';
+import '../widgets/app_action_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,123 +21,125 @@ class _LoginPageState extends State<LoginPage> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
-  late LoginNotifier _loginNotifier;
 
   @override
   void initState() {
     super.initState();
+    context.read<LoginNotifier>().addListener(() {
+      /// Login State Listener
+      final loginNotifier = context.read<LoginNotifier>();
+      final loginState = loginNotifier.state;
 
-    _loginNotifier = context.read<LoginNotifier>();
-
-    _loginNotifier.addListener(
-      () {
-        final loginState = _loginNotifier.loginState;
-
-        if (loginState is SuccessState) {
-          Navigator.of(context).pushReplacementNamed(Routes.home.path);
-        } else if (loginState is ErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                loginState.errorMessage,
-              ),
-            ),
-          );
-        }
-      },
-    );
+      /// Login State Listener for UI
+      if (loginState is LoginSuccess ) {
+        Navigator.pushReplacementNamed(context, Routes.home.path);
+      } else if (loginState is LoginError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+            loginState.errorMessage ,
+          ),
+        ));
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final loginState = context.watch<LoginNotifier>().loginState;
+    /// Login State
+    final loginState = context.watch<LoginNotifier>().state;
 
+    /// ThemeMode from SettingsScope
+    final themeMode = SettingsScope.of(context)!.themeMode;
     final border = OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.onPrimary,
+        color: themeMode == ThemeMode.dark ? Colors.white : Colors.black,
       ),
     );
-
-    final errorBorder = border.copyWith(
-      borderSide: BorderSide(
-        color: Colors.redAccent,
+    var errorBorder = border.copyWith(
+      borderSide: const BorderSide(
+        color: Colors.red,
       ),
     );
-
-    return TextFieldTapRegion(
-      onTapInside: (_) {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Login'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: 'Username',
-                    enabledBorder: border,
-                    focusedBorder: border,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: errorBorder,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  labelText: 'Username',
+                  enabledBorder: border,
+                  focusedBorder: border,
+                  errorBorder: errorBorder,
+                  focusedErrorBorder: errorBorder,
+                  labelStyle: TextStyle(
+                    color: themeMode == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 10,
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Username is required';
-                    }
-
-                    return null;
-                  },
                 ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    enabledBorder: border,
-                    focusedBorder: border,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: errorBorder,
-                    errorMaxLines: 2,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'User name is required';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: _passwordController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  enabledBorder: border,
+                  focusedBorder: border,
+                  errorBorder: errorBorder,
+                  focusedErrorBorder: errorBorder,
+                  labelStyle: TextStyle(
+                    color: themeMode == ThemeMode.dark
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 10,
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty || value.length < 6) {
-                      return 'Password is required and must be at least 6 characters';
-                    }
-
-                    return null;
-                  },
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: !_isPasswordVisible,
-                  obscuringCharacter: '*',
-                ),
-                const SizedBox(height: 32),
-                if (loginState is LoadingState)
-                  const CircularProgressIndicator()
-                else
-                  AppActionButton(
-                    title: 'Login',
+                  suffixIcon: IconButton(
                     onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                    icon: Icon(_isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                  ),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty || value.length < 6) {
+                    return 'Password id required and must be at least 6 character';
+                  }
+                  return null;
+                },
+                obscureText: !_isPasswordVisible,
+                obscuringCharacter: '*',
+              ),
+              const SizedBox(
+                height: 26,
+              ),
+              if (loginState is LoginLoading)
+                const CircularProgressIndicator()
+              else
+                AppActionButton(
+                  onPressed: () {
+                    setState(() {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
                         context.read<LoginNotifier>().login(
@@ -144,10 +147,11 @@ class _LoginPageState extends State<LoginPage> {
                               password: _passwordController.text.trim(),
                             );
                       }
-                    },
-                  ),
-              ],
-            ),
+                    });
+                  },
+                  title: 'Login',
+                ),
+            ],
           ),
         ),
       ),
@@ -158,7 +162,6 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     _usernameController.dispose();
     _passwordController.dispose();
-    _formKey.currentState?.dispose();
     super.dispose();
   }
 }
