@@ -53,7 +53,9 @@ class _LoginPageState extends State<LoginPage> {
 
     final border = OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.onPrimary,
+        color: Theme.of(context).brightness == Brightness.light
+            ? AppColors.onSurface
+            : DarkAppColors.onPrimary,
       ),
     );
 
