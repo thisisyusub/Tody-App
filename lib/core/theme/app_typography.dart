@@ -17,6 +17,11 @@ class AppTypography {
     fontSize: 16,
     height: 24 / 16,
   );
+
+  static const bodyLarge = TextStyle(
+    fontSize: 16,
+    height: 24 / 16,
+  );
 }
 
 extension TextStyleExt on TextStyle {

@@ -34,6 +34,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   Text(
                     'Start using the best To Do app',
                     style: Theme.of(context).textTheme.titleMedium,
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 80),
                   AppActionButton(
