@@ -7,6 +7,8 @@ class AppColors {
   static const onPrimary = Colors.white;
   static const onSurface = Color(0xFF1C1B1F);
   static const primaryVariant = Color(0xFF5835E5);
+  static const error = Color(0xFFF85977);
+  static const primaryInverse = Color(0xFFC8BFFF);
 }
 
 class DarkAppColors {
@@ -16,4 +18,6 @@ class DarkAppColors {
   static const onPrimary = Colors.white;
   static const onSurface = Color(0xFFE6E1E5);
   static const primaryVariant = Color(0xFFCBBEFF);
+  static const error = Color(0xFFD9415E);
+  static const primaryInverse = Color(0xFF5946D2);
 }
