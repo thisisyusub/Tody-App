@@ -1,4 +1,4 @@
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,13 +27,14 @@ void main() async {
   ]);
 
   runApp(
-    DevicePreview(
-      enabled: true,
-      builder: (context) => SettingsScopeWidget(
-        preferences: preferences,
-        child: const MyApp(),
-      ),
+    // DevicePreview(
+    // enabled: true,
+    // builder: (context) =>
+    SettingsScopeWidget(
+      preferences: preferences,
+      child: const MyApp(),
     ),
+    // ),
   );
 }
 
@@ -53,6 +54,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context) {
           return MaterialApp(
             title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
             themeMode: SettingsScope.of(context)!.themeMode,
             theme: ThemeData(
               brightness: Brightness.light,
