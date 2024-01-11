@@ -3,115 +3,115 @@ import 'my_app_typography.dart';
 
 class TypoStyle extends MyAppTypography {
   @override
-  TextStyle get displayL => const TextStyle(
+  TextStyle get displayLarge => const TextStyle(
         fontSize: 57,
         height: 57 / 64,
       );
 
   @override
-  TextStyle get displayM => const TextStyle(
+  TextStyle get displayMedium => const TextStyle(
         fontSize: 45,
         height: 45 / 52,
       );
 
   @override
-  TextStyle get displayS => const TextStyle(
+  TextStyle get displaySmall => const TextStyle(
         fontSize: 36,
         height: 36 / 44,
       );
 
   @override
-  TextStyle get headlineL => const TextStyle(
+  TextStyle get headlineLarge => const TextStyle(
         fontSize: 36,
         height: 36 / 44,
       );
 
   @override
-  TextStyle get headlineM => const TextStyle(
+  TextStyle get headlineMedium => const TextStyle(
         fontSize: 32,
         height: 32 / 40,
       );
 
   @override
-  TextStyle get headlineS => const TextStyle(
+  TextStyle get headlineSmall => const TextStyle(
         fontSize: 28,
         height: 28 / 36,
       );
 
   @override
-  TextStyle get titleL => const TextStyle(
+  TextStyle get titleLarge => const TextStyle(
         fontSize: 22,
         height: 22 / 28,
       );
 
   @override
-  TextStyle get titleM => const TextStyle(
+  TextStyle get titleMedium => const TextStyle(
         fontSize: 16,
         height: 16 / 20,
       );
 
   @override
-  TextStyle get titleS => const TextStyle(
+  TextStyle get titleSmall => const TextStyle(
         fontSize: 14,
         height: 14 / 20,
       );
 
   @override
-  TextStyle get labelL => const TextStyle(
+  TextStyle get labelLarge => const TextStyle(
         fontSize: 14,
         height: 14 / 20,
       );
 
   @override
-  TextStyle get labelM => const TextStyle(
+  TextStyle get labelMedium => const TextStyle(
         fontSize: 12,
         height: 12 / 16,
       );
 
   @override
-  TextStyle get labelS => const TextStyle(
+  TextStyle get labelSmall => const TextStyle(
         fontSize: 11,
         height: 11 / 16,
       );
 
   @override
-  TextStyle get labelXS => const TextStyle(
+  TextStyle get labelXSmall => const TextStyle(
         fontSize: 11,
         height: 11 / 16,
       );
 
   @override
-  TextStyle get bodyL => const TextStyle(
+  TextStyle get bodyLarge => const TextStyle(
         fontSize: 16,
         height: 16 / 24,
       );
 
   @override
-  TextStyle get bodyM => const TextStyle(
+  TextStyle get bodyMedium => const TextStyle(
         fontSize: 14,
         height: 14 / 20,
       );
 
   @override
-  TextStyle get bodyS => const TextStyle(
+  TextStyle get bodySmall => const TextStyle(
         fontSize: 12,
         height: 12 / 16,
       );
 
   @override
-  TextStyle get captionL => const TextStyle(
+  TextStyle get captionLarge => const TextStyle(
         fontSize: 13,
         height: 13 / 18,
       );
 
   @override
-  TextStyle get captionM => const TextStyle(
+  TextStyle get captionMedium => const TextStyle(
         fontSize: 12,
         height: 12 / 16,
       );
 
   @override
-  TextStyle get captionS => const TextStyle(
+  TextStyle get captionSmall => const TextStyle(
         fontSize: 11,
         height: 11 / 16,
       );
