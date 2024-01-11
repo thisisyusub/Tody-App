@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../core/constants/routes.dart';
 import '../../core/theme/app_colors.dart';
-import '../settings/settings_scope_widget.dart';
 
 import '../../core/constants/app_keys.dart';
-import '../settings/settings_scope.dart';
+import '../settings/Setting/settings_scope.dart';
+import '../settings/Setting/settings_scope_widget.dart';
 
 class HomePageMain extends StatefulWidget {
   const HomePageMain({super.key});

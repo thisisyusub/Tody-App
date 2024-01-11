@@ -4,13 +4,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bloc/login/login_notifier.dart';
 import 'counter_notifier.dart';
 import 'presentation/pages/home_page.dart';
-import 'presentation/settings/settings_scope.dart';
-import 'presentation/settings/settings_scope_widget.dart';
 
 import 'core/constants/routes.dart';
 import 'presentation/pages/login_page.dart';
 import 'presentation/pages/onboarding_page.dart';
 import 'presentation/pages/splash_page.dart';
+import 'presentation/settings/Setting/settings_scope.dart';
+import 'presentation/settings/Setting/settings_scope_widget.dart';
 import 'presentation/widgets/black_thema_mode.dart';
 import 'presentation/widgets/light_thema_mode.dart';
 
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
             Routes.login.path: (context) => ChangeNotifierProvider(
               create: (context) => LoginNotifier(),
               child: const LoginPage(),
-              
+
               ),
             Routes.home.path: (context) => const HomePageMain(),
           },
@@ -68,3 +68,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+

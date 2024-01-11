@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../core/constants/app_keys.dart';
 import 'settings_scope.dart';
 
-import '../../core/constants/app_keys.dart';
 
 class SettingsScopeWidget extends StatefulWidget {
   const SettingsScopeWidget({

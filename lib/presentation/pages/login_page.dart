@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../bloc/login/login_notifier.dart';
 import '../../bloc/login/login_state.dart';
 import '../../core/constants/routes.dart';
-import '../settings/settings_scope.dart';
+import '../settings/Setting/settings_scope.dart';
 import '../widgets/app_action_button.dart';
 
 class LoginPage extends StatefulWidget {
