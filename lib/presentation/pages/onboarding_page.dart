@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tody_app/core/theme/theme.dart';
 
 import '../../core/constants/app_keys.dart';
 import '../../core/constants/assets.dart';
@@ -17,6 +18,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: context.colors.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -27,13 +29,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 children: [
                   Text(
                     'Welcome to\nUno To Do!',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: context.typography.displaySmall,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'Start using the best To Do app',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: context.typography.titleMedium,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 80),

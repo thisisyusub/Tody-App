@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/core/theme/app_colors.dart';
-import 'package:tody_app/core/utils/extensions/theme_ext.dart';
+import 'package:tody_app/core/theme/theme.dart';
 import 'package:tody_app/presentation/pages/home/widgets/category_item.dart';
 
 class DynamicCategoryItem extends CategoryItem {
@@ -16,10 +15,7 @@ class DynamicCategoryItem extends CategoryItem {
       context,
       Icon(
         Icons.list_outlined,
-        color: Theme.of(context).select(
-          light: AppColors.primaryInverse,
-          dark: DarkAppColors.primaryInverse,
-        ),
+        color: context.colors.primaryInverse,
       ),
     );
   }

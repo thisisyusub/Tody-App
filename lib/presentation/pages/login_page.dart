@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/login/login_state.dart';
 import 'package:tody_app/core/constants/routes.dart';
-import 'package:tody_app/core/theme/app_colors.dart';
+import 'package:tody_app/core/theme/theme.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
 
     final border = OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColors.onPrimary,
+        color: context.colors.onPrimary,
       ),
     );
 
@@ -68,8 +68,13 @@ class _LoginPageState extends State<LoginPage> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: context.colors.surface,
         appBar: AppBar(
-          title: const Text('Login'),
+          backgroundColor: context.colors.surface,
+          title: Text(
+            'Login',
+            style: context.typography.displaySmall,
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),

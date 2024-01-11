@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/core/theme/app_colors.dart';
-import 'package:tody_app/core/utils/extensions/theme_ext.dart';
+import 'package:tody_app/core/theme/theme.dart';
 
 abstract class CategoryItem extends StatelessWidget {
   const CategoryItem({
@@ -33,7 +32,7 @@ abstract class CategoryItem extends StatelessWidget {
                     child: Text(
                       title,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: context.typography.bodyLarge,
                     ),
                   ),
                 ],
@@ -41,10 +40,7 @@ abstract class CategoryItem extends StatelessWidget {
             ),
             Icon(
               Icons.chevron_right,
-              color: Theme.of(context).select(
-                light: AppColors.onSurfaceMediumBrush,
-                dark: DarkAppColors.onSurfaceMediumBrush,
-              ),
+              color: context.colors.onSurfaceMediumBrush,
             ),
           ],
         ),
