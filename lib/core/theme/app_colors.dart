@@ -1,7 +1,7 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
-abstract interface class AppColors {
-  const AppColors._({
+interface class AppColors extends ThemeExtension<AppColors> {
+  const AppColors({
     required this.surface,
     required this.primary,
     required this.onPrimary,
@@ -28,56 +28,78 @@ abstract interface class AppColors {
   final Color error;
   final Color onSurfaceMediumBrush;
   final Color primaryInverse;
+
+  @override
+  ThemeExtension<AppColors> copyWith({
+    final Color? surface,
+    final Color? primary,
+    final Color? onPrimary,
+    final Color? onSurface,
+    final Color? primaryVariant,
+    final Color? error,
+    final Color? onSurfaceMediumBrush,
+    final Color? primaryInverse,
+  }) {
+    return AppColors(
+      surface: surface ?? this.surface,
+      primary: primary ?? this.primary,
+      onPrimary: onPrimary ?? this.onPrimary,
+      onSurface: onSurface ?? this.onSurface,
+      primaryVariant: primaryVariant ?? this.primaryVariant,
+      error: error ?? this.error,
+      onSurfaceMediumBrush: onSurfaceMediumBrush ?? this.onSurfaceMediumBrush,
+      primaryInverse: primaryInverse ?? this.primaryInverse,
+    );
+  }
+
+  @override
+  ThemeExtension<AppColors> lerp(
+    covariant ThemeExtension<AppColors>? other,
+    double t,
+  ) {
+    if (other is! AppColors) {
+      return this;
+    }
+
+    return AppColors(
+      surface: Color.lerp(surface, other.surface, t)!,
+      primary: Color.lerp(primary, other.primary, t)!,
+      onPrimary: Color.lerp(onPrimary, other.onPrimary, t)!,
+      onSurface: Color.lerp(onSurface, other.onSurface, t)!,
+      primaryVariant: Color.lerp(primaryVariant, other.primaryVariant, t)!,
+      error: Color.lerp(error, other.error, t)!,
+      onSurfaceMediumBrush: Color.lerp(
+        onSurfaceMediumBrush,
+        other.onSurfaceMediumBrush,
+        t,
+      )!,
+      primaryInverse: Color.lerp(primaryInverse, other.primaryInverse, t)!,
+    );
+  }
 }
 
-class _AppLightColors implements AppColors {
-  @override
-  Color get error => const Color(0xFFF85977);
-
-  @override
-  Color get onPrimary => const Color(0xFFFFFFFF);
-
-  @override
-  Color get onSurface => const Color(0xFF1C1B1F);
-
-  @override
-  Color get onSurfaceMediumBrush => const Color.fromRGBO(28, 27, 31, 0.6);
-
-  @override
-  Color get primary => const Color(0xFF5946D2);
-
-  @override
-  Color get primaryInverse => const Color(0xFFC8BFFF);
-
-  @override
-  Color get primaryVariant => const Color(0xFF5835E5);
-
-  @override
-  Color get surface => const Color(0xFFFFFFFF);
+class _AppLightColors extends AppColors {
+  _AppLightColors({
+    super.surface = const Color(0xFFFFFFFF),
+    super.primary = const Color(0xFF5946D2),
+    super.onPrimary = const Color(0xFFFFFFFF),
+    super.onSurface = const Color(0xFF1C1B1F),
+    super.error = const Color(0xFFF85977),
+    super.primaryVariant = const Color(0xFF5835E5),
+    super.onSurfaceMediumBrush = const Color.fromRGBO(28, 27, 31, 0.6),
+    super.primaryInverse = const Color(0xFFC8BFFF),
+  });
 }
 
-class _AppDarkColors implements AppColors {
-  @override
-  Color get error => const Color(0xFFD9415E);
-
-  @override
-  Color get onPrimary => const Color(0xFFFFFFFF);
-
-  @override
-  Color get onSurface => const Color(0xFFE6E1E5);
-
-  @override
-  Color get onSurfaceMediumBrush => const Color.fromRGBO(230, 225, 229, 0.6);
-
-  @override
-  Color get primary => const Color(0xFF5946D2);
-
-  @override
-  Color get primaryInverse => const Color(0xFF5946D2);
-
-  @override
-  Color get primaryVariant => const Color(0xFFCBBEFF);
-
-  @override
-  Color get surface => const Color(0xFF201F24);
+class _AppDarkColors extends AppColors {
+  _AppDarkColors({
+    super.surface = const Color(0xFF201F24),
+    super.primary = const Color(0xFF5946D2),
+    super.onPrimary = const Color(0xFFFFFFFF),
+    super.onSurface = const Color(0xFFE6E1E5),
+    super.error = const Color(0xFFD9415E),
+    super.primaryVariant = const Color(0xFFCBBEFF),
+    super.onSurfaceMediumBrush = const Color.fromRGBO(230, 225, 229, 0.6),
+    super.primaryInverse = const Color(0xFF5946D2),
+  });
 }

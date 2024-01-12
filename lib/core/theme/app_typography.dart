@@ -1,6 +1,6 @@
-import 'package:flutter/rendering.dart';
+import 'package:flutter/material.dart';
 
-interface class AppTypography {
+interface class AppTypography extends ThemeExtension<AppTypography> {
   AppTypography({
     required this.labelLarge,
     required this.displaySmall,
@@ -21,37 +21,69 @@ interface class AppTypography {
   /// body
   final TextStyle bodyLarge;
   final TextStyle bodyMedium;
+
+  @override
+  ThemeExtension<AppTypography> copyWith({
+    final TextStyle? labelLarge,
+    final TextStyle? displaySmall,
+    final TextStyle? titleMedium,
+    final TextStyle? bodyLarge,
+    final TextStyle? bodyMedium,
+  }) {
+    return AppTypography(
+      labelLarge: labelLarge ?? this.labelLarge,
+      displaySmall: displaySmall ?? this.displaySmall,
+      titleMedium: titleMedium ?? this.titleMedium,
+      bodyLarge: bodyLarge ?? this.bodyLarge,
+      bodyMedium: bodyMedium ?? this.bodyMedium,
+    );
+  }
+
+  @override
+  ThemeExtension<AppTypography> lerp(
+    covariant ThemeExtension<AppTypography>? other,
+    double t,
+  ) {
+    if (other is! AppTypography) {
+      return this;
+    }
+
+    return AppTypography(
+      labelLarge: TextStyle.lerp(labelLarge, other.labelLarge, t)!,
+      displaySmall: TextStyle.lerp(displaySmall, other.displaySmall, t)!,
+      titleMedium: TextStyle.lerp(titleMedium, other.titleMedium, t)!,
+      bodyLarge: TextStyle.lerp(bodyLarge, other.bodyLarge, t)!,
+      bodyMedium: TextStyle.lerp(bodyMedium, other.bodyMedium, t)!,
+    );
+  }
 }
 
-// class _AppRegularTypography implements AppTypography {
-//   @override
-//   TextStyle get bodyLarge => const TextStyle(
-//         fontSize: 16,
-//         height: 24 / 16,
-//       );
-//
-//   @override
-//   TextStyle get displaySmall => const TextStyle(
-//         fontSize: 36,
-//         height: 44 / 36,
-//       );
-//
-//   @override
-//   TextStyle get labelLarge => const TextStyle(
-//         fontSize: 14,
-//         height: 20 / 14,
-//       );
-//
-//   @override
-//   TextStyle get titleMedium => const TextStyle(
-//         fontSize: 16,
-//         height: 24 / 16,
-//       );
-// }
-
-// extension TextStyleExt on TextStyle {
-//   TextStyle get w700 => copyWith(fontWeight: FontWeight.w700);
-//   TextStyle get w600 => copyWith(fontWeight: FontWeight.w600);
-//   TextStyle get w500 => copyWith(fontWeight: FontWeight.w500);
-//   TextStyle get w400 => copyWith(fontWeight: FontWeight.w400);
-// }
+class _AppRegularTypography extends AppTypography {
+  _AppRegularTypography({
+    super.labelLarge = const TextStyle(
+      fontSize: 14,
+      height: 20 / 14,
+      fontWeight: FontWeight.w500,
+    ),
+    super.displaySmall = const TextStyle(
+      fontSize: 36,
+      height: 44 / 36,
+      fontWeight: FontWeight.w400,
+    ),
+    super.titleMedium = const TextStyle(
+      fontSize: 16,
+      height: 24 / 16,
+      fontWeight: FontWeight.w500,
+    ),
+    super.bodyLarge = const TextStyle(
+      fontSize: 16,
+      height: 24 / 16,
+      fontWeight: FontWeight.w500,
+    ),
+    super.bodyMedium = const TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w500,
+      height: 20 / 14,
+    ),
+  });
+}

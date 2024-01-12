@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/core/theme/theme.dart';
+import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/presentation/pages/home/widgets/category_item.dart';
 
 class DynamicCategoryItem extends CategoryItem {

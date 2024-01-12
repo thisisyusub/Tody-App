@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tody_app/core/theme/theme.dart';
+import 'package:tody_app/core/theme/theme_ext.dart';
 
 import '../../core/constants/app_keys.dart';
 import '../../core/constants/assets.dart';

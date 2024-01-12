@@ -1,11 +1,9 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:tody_app/core/theme/app_colors.dart';
-import 'package:tody_app/core/theme/app_theme.dart';
-import 'package:tody_app/core/theme/app_theme_scope.dart';
 import 'package:tody_app/core/theme/app_typography.dart';
 
 extension ThemeExt on BuildContext {
-  AppTheme get theme => AppThemeScope.of(this).theme;
-  AppColors get colors => theme.colors;
-  AppTypography get typography => theme.typography;
+  ThemeData get theme => Theme.of(this);
+  AppColors get colors => theme.extension<AppColors>()!;
+  AppTypography get typography => theme.extension<AppTypography>()!;
 }
