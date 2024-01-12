@@ -2,21 +2,52 @@ import 'package:flutter/material.dart';
 import 'package:tody_app/core/theme/app_colors.dart';
 import 'package:tody_app/core/theme/app_typography.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
-import 'package:tody_app/presentation/settings/settings_scope.dart';
 
-class ThemeWrapper extends StatelessWidget {
-  const ThemeWrapper({
+class ThemeScopeWidget extends StatefulWidget {
+  const ThemeScopeWidget({
     super.key,
     required this.child,
   });
 
   final Widget child;
 
+  static ThemeScopeWidgetState? of(BuildContext context) {
+    return context.findRootAncestorStateOfType<ThemeScopeWidgetState>();
+  }
+
+  @override
+  State<ThemeScopeWidget> createState() => ThemeScopeWidgetState();
+}
+
+class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
+  ThemeMode? _themeMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _themeMode = ThemeMode.system;
+  }
+
+  void changeTo(ThemeMode themeMode) {
+    if (_themeMode == themeMode) return;
+
+    setState(() {
+      _themeMode = themeMode;
+    });
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    setState(() {
+      _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final themeMode = SettingsScope.of(context)!.themeMode;
-
-    final AppColors colors = switch (themeMode) {
+    final colors = switch (_themeMode) {
       ThemeMode.light => AppColors.light(),
       ThemeMode.dark => AppColors.dark(),
       _ => AppColors.light(),
@@ -56,10 +87,10 @@ class ThemeWrapper extends StatelessWidget {
     );
 
     return ThemeScope(
-      themeMode: themeMode,
+      themeMode: _themeMode ?? ThemeMode.light,
       colors: colors,
       typography: typography,
-      child: child,
+      child: widget.child,
     );
   }
 }

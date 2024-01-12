@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
-import 'package:tody_app/core/theme/theme_wrapper.dart';
+import 'package:tody_app/core/theme/theme_scope_widget.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';
 import 'package:tody_app/presentation/settings/settings_scope_widget.dart';
 
@@ -28,7 +28,7 @@ void main() async {
     // builder: (context) =>
     SettingsScopeWidget(
       preferences: preferences,
-      child: const ThemeWrapper(
+      child: const ThemeScopeWidget(
         child: MyApp(),
       ),
     ),

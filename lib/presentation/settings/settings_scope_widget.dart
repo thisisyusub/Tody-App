@@ -24,17 +24,17 @@ class SettingsScopeWidget extends StatefulWidget {
 class SettingsScopeWidgetState extends State<SettingsScopeWidget> {
   ThemeMode? _themeMode;
 
-  void toggleTheme() async {
-    _themeMode =
-        _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-
-    await widget.preferences.setBool(
-      AppKeys.isDarkMode,
-      _themeMode == ThemeMode.dark ? true : false,
-    );
-
-    setState(() {});
-  }
+  // void toggleTheme() async {
+  //   _themeMode =
+  //       _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+  //
+  //   await widget.preferences.setBool(
+  //     AppKeys.isDarkMode,
+  //     _themeMode == ThemeMode.dark ? true : false,
+  //   );
+  //
+  //   setState(() {});
+  // }
 
   @override
   void didChangeDependencies() async {

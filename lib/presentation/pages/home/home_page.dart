@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
+import 'package:tody_app/core/theme/theme_scope.dart';
+import 'package:tody_app/core/theme/theme_scope_widget.dart';
 import 'package:tody_app/presentation/pages/home/widgets/dynamic_category_item.dart';
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
-import 'package:tody_app/presentation/settings/settings_scope.dart';
-import 'package:tody_app/presentation/settings/settings_scope_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final themeMode = SettingsScope.of(context)!.themeMode;
+    final themeMode = ThemeScope.of(context).themeMode;
     final switchEnabled = themeMode == ThemeMode.light ? false : true;
 
     return Scaffold(
@@ -107,10 +107,22 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            Switch(
-              value: switchEnabled,
-              onChanged: (_) {
-                SettingsScopeWidget.of(context)?.toggleTheme();
+            ListTile(
+              title: Text('Light'),
+              onTap: () {
+                ThemeScopeWidget.of(context)!.changeTo(ThemeMode.light);
+              },
+            ),
+            ListTile(
+              title: Text('Dark'),
+              onTap: () {
+                ThemeScopeWidget.of(context)!.changeTo(ThemeMode.dark);
+              },
+            ),
+            ListTile(
+              title: Text('System'),
+              onTap: () {
+                ThemeScopeWidget.of(context)!.changeTo(ThemeMode.system);
               },
             ),
             InkWell(
