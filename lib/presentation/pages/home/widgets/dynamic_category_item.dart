@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/presentation/pages/home/widgets/category_item.dart';
-import 'package:tody_app/presentation/settings/Theme/theme_scope.dart';
+import 'category_item.dart';
+import '../../../settings/Theme/theme_ext.dart';
 
 class DynamicCategoryItem extends CategoryItem {
   const DynamicCategoryItem({
@@ -14,8 +14,6 @@ class DynamicCategoryItem extends CategoryItem {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ThemeScope.of(context)!.theme;
-    final typo = ThemeScope.of(context)!.typo;
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -36,15 +34,15 @@ class DynamicCategoryItem extends CategoryItem {
                     child: Text(
                       title,
                       style: TextStyle(
-                          color: theme.onSurface,
-                          fontSize: typo.bodyLarge.fontSize),
+                          color: context.color.onSurface,
+                          fontSize: context.typo.bodyLarge.fontSize),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Icon(
                     Icons.chevron_right,
-                    color: theme.onSurfaceMediumBrush,
+                    color: context.color.onSurfaceMediumBrush,
                   ),
                 ],
               ),

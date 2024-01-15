@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
+import 'app_theme.dart';
 
-import '../../../core/theme/Design System/my_app_theme.dart';
-import '../../../core/theme/Design System/typography_style.dart';
-
-class ThemeScope extends InheritedWidget {
-  const ThemeScope({
+class AppThemeScope extends InheritedWidget {
+  const AppThemeScope({
     super.key,
     required super.child,
     required this.theme,
-    required this.typo,
   });
 
-  final MyAppColor theme;
-  final TypoStyle typo;
+  final AppTheme theme;
 
-  static ThemeScope? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<ThemeScope>();
+  static AppThemeScope? of(BuildContext context) {
+    final AppThemeScope? result =
+        context.dependOnInheritedWidgetOfExactType<AppThemeScope>();
+    assert(result != null, 'No ThemeScope found in context');
+    return result;
   }
 
   @override
-  bool updateShouldNotify(ThemeScope oldWidget) {
+  bool updateShouldNotify(AppThemeScope oldWidget) {
     return true;
   }
 }

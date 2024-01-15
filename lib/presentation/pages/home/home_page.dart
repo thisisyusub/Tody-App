@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/presentation/pages/home/widgets/catalog.dart';
+import 'widgets/catalog.dart';
+import '../../settings/Theme/theme_ext.dart';
 
-import '../../settings/Theme/theme_scope.dart';
 import 'widgets/dynamic_category_item.dart';
 import 'widgets/static_category_item.dart';
 
@@ -15,8 +15,7 @@ class HomePageMain extends StatefulWidget {
 class _HomePageState extends State<HomePageMain> {
   @override
   Widget build(BuildContext context) {
-    final theme = ThemeScope.of(context)!.theme;
-    final typo = ThemeScope.of(context)!.typo;
+   
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -24,17 +23,17 @@ class _HomePageState extends State<HomePageMain> {
             Column(children: [
               Catalog(
                 prefix: CircleAvatar(
-                  backgroundColor: theme.primary,
+                  backgroundColor: context.color.primary,
                   child: Text('PH',
                       style: TextStyle(
-                        color: theme.surface,
+                        color: context.color.surface,
                       )),
                 ),
                 title: Text(
                   'Parviz Hashimi',
                   style: TextStyle(
-                      color: theme.onSurface,
-                      fontSize: typo.titleMedium.fontSize),
+                      color: context.color.onSurface,
+                      fontSize: context.typo.titleMedium.fontSize),
                 ),
                 suffix: IconButton(
                   onPressed: () => Navigator.of(context).push(
@@ -42,7 +41,7 @@ class _HomePageState extends State<HomePageMain> {
                       builder: (_) => Container(),
                     ),
                   ),
-                  icon: Icon(Icons.search, color: theme.primary),
+                  icon: Icon(Icons.search, color: context.color.primary),
                 ),
                 onPrefix: () {
                   print("onPrefix");
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePageMain> {
               DynamicCategoryItem(
                 prefix: Icon(
                   Icons.star_rate,
-                  color: theme.error,
+                  color: context.color.error,
                 ),
                 title: 'Importants',
                 onTap: () {},
@@ -61,7 +60,7 @@ class _HomePageState extends State<HomePageMain> {
               DynamicCategoryItem(
                 prefix: Icon(
                   Icons.house_siding_outlined,
-                  color: theme.primary,
+                  color: context.color.primary,
                 ),
                 title: 'Tasks',
                 onTap: () {},
@@ -82,16 +81,16 @@ class _HomePageState extends State<HomePageMain> {
                   title: 'Important List',
                   onTap: () {},
                 ),
-                StaticCategoryItem(
+                const StaticCategoryItem(
                   title: 'Task List',
                 )
               ]),
             ),
             Catalog(
-              prefix: Icon(Icons.add, color: theme.primary),
+              prefix: Icon(Icons.add, color: context.color.primary),
               title: Text(
                 'New List',
-                style: TextStyle(color: theme.primary),
+                style: TextStyle(color: context.color.primary),
               ),
               onTap: () {
                 print("onTap");

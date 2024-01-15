@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tody_app/presentation/settings/Theme/theme_ext.dart';
 
 import '../../core/constants/app_keys.dart';
 import '../../core/constants/assets.dart';
@@ -27,13 +28,13 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 children: [
                   Text(
                     'Welcome to\nUno To Do!',
-                    style: Theme.of(context).textTheme.displaySmall,
+                    style: context.typo.displaySmall,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 16),
                   Text(
                     'Start using the best To Do app',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: context.typo.titleMedium,
                   ),
                   const SizedBox(height: 80),
                   AppActionButton(

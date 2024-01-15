@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tody_app/presentation/pages/home/widgets/category_item.dart';
-import 'package:tody_app/presentation/settings/Theme/theme_scope.dart';
 
 import 'catalog_item.dart';
 
@@ -20,8 +18,6 @@ class Catalog extends CatalogItem {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ThemeScope.of(context)!.theme;
-    final typo = ThemeScope.of(context)!.typo;
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -36,7 +32,7 @@ class Catalog extends CatalogItem {
             Expanded(
               child: Row(
                 children: [
-                  InkWell(child: prefix, onTap: onPrefix),
+                  InkWell(onTap: onPrefix, child: prefix),
                   const SizedBox(width: 16),
                   Expanded(
                     child: title,

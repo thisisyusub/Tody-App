@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_typography.dart';
+import '../../core/theme/Design_System/typography_style.dart';
+import '../settings/Theme/theme_ext.dart';
 
 class AppActionButton extends StatelessWidget {
   const AppActionButton({
@@ -15,13 +14,11 @@ class AppActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).brightness == Brightness.dark
-        ? DarkAppColors.primary
-        : AppColors.primary;
+   
 
     return Material(
       borderRadius: BorderRadius.circular(20),
-      color: color,
+      color: context.color.primary,
       elevation: 4,
       child: InkWell(
           borderRadius: BorderRadius.circular(20),
@@ -33,9 +30,12 @@ class AppActionButton extends StatelessWidget {
             child: Center(
               child: Text(
                 title,
-                style: AppTypography.labelL.w500.copyWith(
-                  color: AppColors.onPrimary,
+                style: context.typo.labelLarge.w500.copyWith(
+                  color: context.color.onPrimary,
                 ),
+                // style: AppTypography.labelL.w500.copyWith(
+                //   color: AppColors.onPrimary,
+                // ),
               ),
             ),
           )),
