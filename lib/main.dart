@@ -1,7 +1,7 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tody_app/core/theme/Design%20System/dark_theme.dart';
 import 'package:tody_app/core/theme/Design%20System/light_theme.dart';
 import 'package:tody_app/presentation/settings/Theme/theme_scope.dart';
 import 'bloc/login/login_notifier.dart';
@@ -25,9 +25,12 @@ void main() async {
   final preferences = await SharedPreferences.getInstance();
 
   runApp(
-    SettingsScopeWidget(
-      preferences: preferences,
-      child: const MyApp(),
+    DevicePreview(
+      enabled: true,
+      builder: (context) => SettingsScopeWidget(
+        preferences: preferences,
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -60,6 +63,13 @@ class _MyAppState extends State<MyApp> {
 
             /// Routes
             initialRoute: Routes.splash.path,
+            builder: ((context, child) {
+              return MediaQuery.withClampedTextScaling(
+                minScaleFactor: 0.8,
+                maxScaleFactor: 2.5,
+                child: child!,
+              );
+            }),
             routes: {
               Routes.splash.path: (context) => const SplashPage(),
               Routes.onboarding.path: (context) => const OnBoardingPage(),
