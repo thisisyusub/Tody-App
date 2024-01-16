@@ -103,9 +103,9 @@ class _SettingsBarChip<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return UnconstrainedBox(
       child: Container(
-        padding: const EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: 16,
-          vertical: 6,
+          vertical: 6 + (selected ? 1 : 0),
         ),
         decoration: BoxDecoration(
           color: selected ? context.colors.secondaryContainer : null,
