@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
 import 'package:tody_app/core/theme/theme_scope_widget.dart';
@@ -32,11 +34,16 @@ class _HomePageState extends State<HomePage> {
                     right: 10,
                     left: 20,
                   ),
-                  leading: CircleAvatar(
-                    backgroundColor: context.colors.primary,
-                    child: Text(
-                      'AB',
-                      style: context.typography.bodyMedium,
+                  leading: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(Routes.settings.path);
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: context.colors.primary,
+                      child: Text(
+                        'AB',
+                        style: context.typography.bodyMedium,
+                      ),
                     ),
                   ),
                   title: Text(
@@ -54,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                     Icons.star_rate,
                     color: context.colors.error,
                   ),
-                  title: 'Important',
+                  title: AppLocalizations.of(context).important,
                   onTap: () {},
                 ),
                 StaticCategoryItem(
@@ -62,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                     Icons.house_siding,
                     color: context.colors.primary,
                   ),
-                  title: 'Tasks',
+                  title: AppLocalizations.of(context).tasks,
                 ),
               ],
             ),
@@ -108,19 +115,19 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              title: Text('Light'),
+              title: Text(AppLocalizations.of(context).light),
               onTap: () {
                 ThemeScopeWidget.of(context)!.changeTo(ThemeMode.light);
               },
             ),
             ListTile(
-              title: Text('Dark'),
+              title: Text(AppLocalizations.of(context).dark),
               onTap: () {
                 ThemeScopeWidget.of(context)!.changeTo(ThemeMode.dark);
               },
             ),
             ListTile(
-              title: Text('System'),
+              title: Text(AppLocalizations.of(context).system),
               onTap: () {
                 ThemeScopeWidget.of(context)!.changeTo(ThemeMode.system);
               },

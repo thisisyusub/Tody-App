@@ -1,0 +1,9 @@
+{
+  "@@locale": "en",
+  "important": "Important",
+  "tasks": "Tasks",
+  "light": "Light",
+  "dark": "Dark",
+  "system": "System",
+  "settings": "Settings"
+}

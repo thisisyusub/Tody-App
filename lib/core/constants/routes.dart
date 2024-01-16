@@ -2,7 +2,8 @@ enum Routes {
   splash(path: '/splash'),
   onboarding(path: '/onboarding'),
   login(path: '/login'),
-  home(path: '/home');
+  home(path: '/home'),
+  settings(path: '/settings');
 
   const Routes({required this.path});
 

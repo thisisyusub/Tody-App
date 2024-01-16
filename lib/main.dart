@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
 import 'package:tody_app/core/theme/theme_scope_widget.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';
+import 'package:tody_app/presentation/pages/settings/settings_page.dart';
 import 'package:tody_app/presentation/settings/settings_scope_widget.dart';
 
 import 'core/constants/routes.dart';
@@ -55,14 +57,20 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Tody App',
       debugShowCheckedModeBanner: false,
+      locale: const Locale('tr'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      // localizationsDelegates: ,
       themeMode: theme.themeMode,
       theme: ThemeData(
         brightness: Brightness.light,
         extensions: extensions,
+        scaffoldBackgroundColor: theme.colors.surface,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         extensions: extensions,
+        scaffoldBackgroundColor: theme.colors.surface,
       ),
       initialRoute: Routes.splash.path,
       builder: (context, child) {
@@ -80,6 +88,7 @@ class _MyAppState extends State<MyApp> {
               child: const LoginPage(),
             ),
         Routes.home.path: (context) => const HomePage(),
+        Routes.settings.path: (context) => const SettingsPage(),
       },
     );
   }

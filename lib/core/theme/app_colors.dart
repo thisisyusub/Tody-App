@@ -10,6 +10,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
     required this.primaryVariant,
     required this.onSurfaceMediumBrush,
     required this.primaryInverse,
+    required this.onPrimaryContainer,
+    required this.secondaryContainer,
   });
 
   factory AppColors.light() {
@@ -28,6 +30,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
   final Color error;
   final Color onSurfaceMediumBrush;
   final Color primaryInverse;
+  final Color onPrimaryContainer;
+  final Color secondaryContainer;
 
   @override
   ThemeExtension<AppColors> copyWith({
@@ -39,6 +43,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
     final Color? error,
     final Color? onSurfaceMediumBrush,
     final Color? primaryInverse,
+    final Color? onPrimaryContainer,
+    final Color? secondaryContainer,
   }) {
     return AppColors(
       surface: surface ?? this.surface,
@@ -49,6 +55,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
       error: error ?? this.error,
       onSurfaceMediumBrush: onSurfaceMediumBrush ?? this.onSurfaceMediumBrush,
       primaryInverse: primaryInverse ?? this.primaryInverse,
+      onPrimaryContainer: onPrimaryContainer ?? this.onPrimaryContainer,
+      secondaryContainer: secondaryContainer ?? this.secondaryContainer,
     );
   }
 
@@ -74,6 +82,16 @@ interface class AppColors extends ThemeExtension<AppColors> {
         t,
       )!,
       primaryInverse: Color.lerp(primaryInverse, other.primaryInverse, t)!,
+      onPrimaryContainer: Color.lerp(
+        onPrimaryContainer,
+        other.onPrimaryContainer,
+        t,
+      )!,
+      secondaryContainer: Color.lerp(
+        secondaryContainer,
+        other.secondaryContainer,
+        t,
+      )!,
     );
   }
 }
@@ -88,6 +106,8 @@ class _AppLightColors extends AppColors {
     super.primaryVariant = const Color(0xFF5835E5),
     super.onSurfaceMediumBrush = const Color.fromRGBO(28, 27, 31, 0.6),
     super.primaryInverse = const Color(0xFFC8BFFF),
+    super.onPrimaryContainer = const Color(0xFF160067),
+    super.secondaryContainer = const Color(0xFFE5DFF9),
   });
 }
 
@@ -101,5 +121,7 @@ class _AppDarkColors extends AppColors {
     super.primaryVariant = const Color(0xFFCBBEFF),
     super.onSurfaceMediumBrush = const Color.fromRGBO(230, 225, 229, 0.6),
     super.primaryInverse = const Color(0xFF5946D2),
+    super.onPrimaryContainer = const Color(0xFFE5DEFF),
+    super.secondaryContainer = const Color(0xFF474459),
   });
 }

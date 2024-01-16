@@ -72,6 +72,12 @@ class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
         fontWeight: FontWeight.w500,
         color: colors.primaryVariant,
       ),
+      titleLarge: TextStyle(
+        fontSize: 22,
+        height: 28 / 22,
+        fontWeight: FontWeight.w400,
+        color: colors.onSurface,
+      ),
       bodyLarge: TextStyle(
         fontSize: 16,
         height: 24 / 16,
@@ -83,6 +89,12 @@ class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
         fontWeight: FontWeight.w500,
         height: 20 / 14,
         color: colors.surface,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w500,
+        height: 15 / 12,
+        color: colors.onSurface,
       ),
     );
 

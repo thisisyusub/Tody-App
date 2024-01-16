@@ -1,0 +1,9 @@
+{
+  "@@locale": "tr",
+  "important": "Önemli",
+  "tasks": "Görevler",
+  "light": "Işık",
+  "dark": "Karanlık",
+  "system": "Sistem",
+  "settings": "Ayarlar"
+}

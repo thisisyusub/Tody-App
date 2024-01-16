@@ -5,8 +5,10 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
     required this.labelLarge,
     required this.displaySmall,
     required this.titleMedium,
+    required this.titleLarge,
     required this.bodyLarge,
     required this.bodyMedium,
+    required this.bodySmall,
   });
 
   /// label
@@ -17,25 +19,31 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
 
   /// title
   final TextStyle titleMedium;
+  final TextStyle titleLarge;
 
   /// body
   final TextStyle bodyLarge;
   final TextStyle bodyMedium;
+  final TextStyle bodySmall;
 
   @override
   ThemeExtension<AppTypography> copyWith({
     final TextStyle? labelLarge,
     final TextStyle? displaySmall,
     final TextStyle? titleMedium,
+    final TextStyle? titleLarge,
     final TextStyle? bodyLarge,
     final TextStyle? bodyMedium,
+    final TextStyle? bodySmall,
   }) {
     return AppTypography(
       labelLarge: labelLarge ?? this.labelLarge,
       displaySmall: displaySmall ?? this.displaySmall,
       titleMedium: titleMedium ?? this.titleMedium,
+      titleLarge: titleLarge ?? this.titleLarge,
       bodyLarge: bodyLarge ?? this.bodyLarge,
       bodyMedium: bodyMedium ?? this.bodyMedium,
+      bodySmall: bodySmall ?? this.bodySmall,
     );
   }
 
@@ -52,38 +60,10 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
       labelLarge: TextStyle.lerp(labelLarge, other.labelLarge, t)!,
       displaySmall: TextStyle.lerp(displaySmall, other.displaySmall, t)!,
       titleMedium: TextStyle.lerp(titleMedium, other.titleMedium, t)!,
+      titleLarge: TextStyle.lerp(titleLarge, other.titleLarge, t)!,
       bodyLarge: TextStyle.lerp(bodyLarge, other.bodyLarge, t)!,
       bodyMedium: TextStyle.lerp(bodyMedium, other.bodyMedium, t)!,
+      bodySmall: TextStyle.lerp(bodySmall, other.bodySmall, t)!,
     );
   }
-}
-
-class _AppRegularTypography extends AppTypography {
-  _AppRegularTypography({
-    super.labelLarge = const TextStyle(
-      fontSize: 14,
-      height: 20 / 14,
-      fontWeight: FontWeight.w500,
-    ),
-    super.displaySmall = const TextStyle(
-      fontSize: 36,
-      height: 44 / 36,
-      fontWeight: FontWeight.w400,
-    ),
-    super.titleMedium = const TextStyle(
-      fontSize: 16,
-      height: 24 / 16,
-      fontWeight: FontWeight.w500,
-    ),
-    super.bodyLarge = const TextStyle(
-      fontSize: 16,
-      height: 24 / 16,
-      fontWeight: FontWeight.w500,
-    ),
-    super.bodyMedium = const TextStyle(
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      height: 20 / 14,
-    ),
-  });
 }
