@@ -22,7 +22,7 @@ class LoginNotifier extends ChangeNotifier {
       // _loginState = LoadingState();
       // notifyListeners();
 
-      final uri = Uri.http('192.168.100.67:8080', '/auth/login');
+      final uri = Uri.http('localhost:8080', '/auth/login');
       final response = await http.post(
         uri,
         body: jsonEncode({

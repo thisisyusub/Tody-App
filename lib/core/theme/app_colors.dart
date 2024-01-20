@@ -12,6 +12,7 @@ interface class AppColors extends ThemeExtension<AppColors> {
     required this.primaryInverse,
     required this.onPrimaryContainer,
     required this.secondaryContainer,
+    required this.onSurfacePressedBrush,
   });
 
   factory AppColors.light() {
@@ -32,6 +33,7 @@ interface class AppColors extends ThemeExtension<AppColors> {
   final Color primaryInverse;
   final Color onPrimaryContainer;
   final Color secondaryContainer;
+  final Color onSurfacePressedBrush;
 
   @override
   ThemeExtension<AppColors> copyWith({
@@ -57,6 +59,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
       primaryInverse: primaryInverse ?? this.primaryInverse,
       onPrimaryContainer: onPrimaryContainer ?? this.onPrimaryContainer,
       secondaryContainer: secondaryContainer ?? this.secondaryContainer,
+      onSurfacePressedBrush:
+          onSurfacePressedBrush ?? this.onSurfacePressedBrush,
     );
   }
 
@@ -92,6 +96,11 @@ interface class AppColors extends ThemeExtension<AppColors> {
         other.secondaryContainer,
         t,
       )!,
+      onSurfacePressedBrush: Color.lerp(
+        onSurfacePressedBrush,
+        other.onSurfacePressedBrush,
+        t,
+      )!,
     );
   }
 }
@@ -108,6 +117,7 @@ class _AppLightColors extends AppColors {
     super.primaryInverse = const Color(0xFFC8BFFF),
     super.onPrimaryContainer = const Color(0xFF160067),
     super.secondaryContainer = const Color(0xFFE5DFF9),
+    super.onSurfacePressedBrush = const Color.fromRGBO(28, 27, 31, 0.2),
   });
 }
 
@@ -123,5 +133,6 @@ class _AppDarkColors extends AppColors {
     super.primaryInverse = const Color(0xFF5946D2),
     super.onPrimaryContainer = const Color(0xFFE5DEFF),
     super.secondaryContainer = const Color(0xFF474459),
+    super.onSurfacePressedBrush = const Color.fromRGBO(230, 225, 229, 0.2),
   });
 }

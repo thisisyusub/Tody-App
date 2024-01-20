@@ -44,43 +44,40 @@ class _SettingsBarState<T> extends State<SettingsBar<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.title,
-            style: context.typography.bodySmall,
-          ),
-          const SizedBox(height: 5),
-          Wrap(
-            spacing: 5,
-            runSpacing: 5,
-            children: widget.chips.map(
-              (chip) {
-                return GestureDetector(
-                  onTap: () {
-                    if (_selectedType == chip.type) return;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.title,
+          style: context.typography.bodySmall,
+        ),
+        const SizedBox(height: 5),
+        Wrap(
+          spacing: 5,
+          runSpacing: 5,
+          children: widget.chips.map(
+            (chip) {
+              return GestureDetector(
+                onTap: () {
+                  if (_selectedType == chip.type) return;
 
-                    setState(() {
-                      _selectedType = chip.type;
-                    });
+                  setState(() {
+                    _selectedType = chip.type;
+                  });
 
-                    widget.onChipSelected?.call(_selectedType as T);
-                  },
-                  child: _SettingsBarChip(
-                    title: chip.title,
-                    type: chip.type,
-                    selected: _selectedType == chip.type,
-                    prefix: chip.prefix,
-                  ),
-                );
-              },
-            ).toList(),
-          ),
-        ],
-      ),
+                  widget.onChipSelected?.call(_selectedType as T);
+                },
+                child: _SettingsBarChip(
+                  title: chip.title,
+                  type: chip.type,
+                  selected: _selectedType == chip.type,
+                  prefix: chip.prefix,
+                ),
+              );
+            },
+          ).toList(),
+        ),
+      ],
     );
   }
 }

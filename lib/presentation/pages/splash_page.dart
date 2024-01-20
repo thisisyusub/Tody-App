@@ -25,19 +25,14 @@ class _SplashPageState extends State<SplashPage> {
     const secureStorage = FlutterSecureStorage();
     final token = await secureStorage.read(key: AppKeys.token);
 
-    Navigator.pushReplacementNamed(
-      context,
-      Routes.home.path,
-    );
-
-    // if (token != null && mounted) {
-    //   Navigator.pushReplacementNamed(
-    //     context,
-    //     Routes.home.path,
-    //   );
-    // } else {
-    //   _checkIfAppOpenedPreviously();
-    // }
+    if (token != null && mounted) {
+      Navigator.pushReplacementNamed(
+        context,
+        Routes.home.path,
+      );
+    } else {
+      _checkIfAppOpenedPreviously();
+    }
   }
 
   void _checkIfAppOpenedPreviously() async {

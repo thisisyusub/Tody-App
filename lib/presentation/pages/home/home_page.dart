@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
@@ -18,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final themeMode = ThemeScope.of(context).themeMode;
-    final switchEnabled = themeMode == ThemeMode.light ? false : true;
+    final user = context.watch<UserNotifier>().user;
 
     return Scaffold(
       backgroundColor: context.colors.surface,
@@ -27,35 +29,39 @@ class _HomePageState extends State<HomePage> {
           children: [
             Column(
               children: [
-                ListTile(
-                  contentPadding: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                    right: 10,
-                    left: 20,
-                  ),
-                  leading: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(Routes.settings.path);
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: context.colors.primary,
-                      child: Text(
-                        'AB',
-                        style: context.typography.bodyMedium,
+                if (user != null)
+                  ListTile(
+                    contentPadding: const EdgeInsets.only(
+                      top: 10,
+                      bottom: 10,
+                      right: 10,
+                      left: 20,
+                    ),
+                    leading: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(
+                          Routes.settings.path,
+                          arguments: context.read<UserNotifier>(),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: context.colors.primary,
+                        child: Text(
+                          user.avatarLabel ?? 'N/A',
+                          style: context.typography.bodyMedium,
+                        ),
                       ),
                     ),
+                    title: Text(
+                      user.fullName,
+                      style: context.typography.titleMedium,
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () {},
+                      color: context.colors.primary,
+                    ),
                   ),
-                  title: Text(
-                    'Antonio Bonilla',
-                    style: context.typography.titleMedium,
-                  ),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.search),
-                    onPressed: () {},
-                    color: context.colors.primary,
-                  ),
-                ),
                 StaticCategoryItem(
                   prefix: Icon(
                     Icons.star_rate,
