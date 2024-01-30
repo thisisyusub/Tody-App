@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:tody_app/core/constants/app_keys.dart';
 import 'package:tody_app/core/rest/http_rest_client.dart';
 import 'package:tody_app/core/rest/rest_client.dart';
-import 'package:tody_app/model/error_response.dart';
-import 'package:tody_app/model/user.dart';
+import 'package:tody_app/data/model/error_response.dart';
+import 'package:tody_app/data/model/user.dart';
 
 class UserNotifier extends ChangeNotifier {
   User? user;

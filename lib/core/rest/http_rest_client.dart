@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:tody_app/core/rest/rest_client.dart';
-import 'package:tody_app/model/error_response.dart';
+import 'package:tody_app/data/model/error_response.dart';
 
 final class HttpRestClient implements RestClient {
   const HttpRestClient(this.client);

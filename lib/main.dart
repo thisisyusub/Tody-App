@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
+import 'package:tody_app/core/rest/http_rest_client.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
 import 'package:tody_app/core/theme/theme_scope_widget.dart';
+import 'package:tody_app/core/utils/base64_converter.dart';
+import 'package:tody_app/data/data_source/auth_local_data_source.dart';
+import 'package:tody_app/data/data_source/auth_remote_data_source.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';
 import 'package:tody_app/presentation/pages/settings/settings_page.dart';
 import 'package:tody_app/presentation/settings/settings_scope_widget.dart';
@@ -85,7 +91,15 @@ class _MyAppState extends State<MyApp> {
         Routes.splash.path: (context) => const SplashPage(),
         Routes.onboarding.path: (context) => const OnBoardingPage(),
         Routes.login.path: (context) => ChangeNotifierProvider(
-              create: (context) => LoginNotifier(),
+              create: (context) => LoginNotifier(
+                authRemoteDataSource: AuthRemoteDataSourceImpl(
+                  HttpRestClient(http.Client()),
+                ),
+                authLocalDataSource: const AuthLocalDataSourceImpl(
+                  FlutterSecureStorage(),
+                ),
+                converter: Base64ConverterImpl(),
+              ),
               child: const LoginPage(),
             ),
         Routes.home.path: (context) => ChangeNotifierProvider(
