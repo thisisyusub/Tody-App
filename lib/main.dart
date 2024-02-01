@@ -23,8 +23,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
 
-  print(GetIt.instance<AuthNotifier>());
-
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
