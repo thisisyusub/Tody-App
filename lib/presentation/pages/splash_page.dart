@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
+import 'package:tody_app/bloc/auth/auth_notifier.dart';
+import 'package:tody_app/bloc/login/login_notifier.dart';
+import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
+import 'package:tody_app/presentation/pages/login_page.dart';
 
-import '../../core/constants/app_keys.dart';
 import '../../core/constants/assets.dart';
-import '../../core/constants/routes.dart';
+import 'home/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -15,49 +18,31 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    super.initState();
-    _checkAuth();
-  }
-
-  void _checkAuth() async {
-    const secureStorage = FlutterSecureStorage();
-    final token = await secureStorage.read(key: AppKeys.token);
-
-    if (token != null && mounted) {
-      Navigator.pushReplacementNamed(
-        context,
-        Routes.home.path,
-      );
-    } else {
-      _checkIfAppOpenedPreviously();
-    }
-  }
-
-  void _checkIfAppOpenedPreviously() async {
-    final preferences = await SharedPreferences.getInstance();
-    final isAppOpened = preferences.getBool(AppKeys.isAppOpened);
-    await Future.delayed(const Duration(seconds: 1));
-
-    if (mounted) {
-      if (isAppOpened == null || !isAppOpened) {
-        Navigator.pushReplacementNamed(
-          context,
-          Routes.onboarding.path,
-        );
-      } else {
-        Navigator.pushReplacementNamed(
-          context,
-          Routes.login.path,
-        );
-      }
-    }
-  }
+  // void _checkIfAppOpenedPreviously() async {
+  //   final preferences = await SharedPreferences.getInstance();
+  //   final isAppOpened = preferences.getBool(AppKeys.isAppOpened);
+  //   await Future.delayed(const Duration(seconds: 1));
+  //
+  //   if (mounted) {
+  //     if (isAppOpened == null || !isAppOpened) {
+  //       Navigator.pushReplacementNamed(
+  //         context,
+  //         Routes.onboarding.path,
+  //       );
+  //     } else {
+  //       Navigator.pushReplacementNamed(
+  //         context,
+  //         Routes.login.path,
+  //       );
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final authState = context.watch<AuthNotifier>().authState;
+
+    final placeHolder = Scaffold(
       backgroundColor: context.colors.surface,
       body: const Center(
         child: Column(
@@ -71,5 +56,20 @@ class _SplashPageState extends State<SplashPage> {
         ),
       ),
     );
+
+    if (authState == AuthState.initial) {
+      return placeHolder;
+    } else if (authState == AuthState.authenticated) {
+      return ChangeNotifierProvider(
+        lazy: true,
+        create: (context) => UserNotifier()..fetchUser(),
+        child: const HomePage(),
+      );
+    } else {
+      return ChangeNotifierProvider(
+        create: (context) => GetIt.instance<LoginNotifier>(),
+        child: const LoginPage(),
+      );
+    }
   }
 }

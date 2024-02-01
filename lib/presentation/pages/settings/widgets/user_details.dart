@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
-import 'package:tody_app/core/constants/app_keys.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 
 class UserDetails extends StatelessWidget {
@@ -42,8 +41,8 @@ class UserDetails extends StatelessWidget {
           ],
           TextButton(
             onPressed: () {
-              const storage = FlutterSecureStorage();
-              storage.delete(key: AppKeys.token);
+              context.read<AuthNotifier>().logOut();
+              Navigator.of(context).pop();
             },
             child: Text(
               'Sign out',

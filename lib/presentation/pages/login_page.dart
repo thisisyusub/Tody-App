@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/login/login_state.dart';
-import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
 
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
         final loginState = _loginNotifier.loginState;
 
         if (loginState is SuccessState) {
-          Navigator.of(context).pushReplacementNamed(Routes.home.path);
+          context.read<AuthNotifier>().userLogged();
         } else if (loginState is ErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
