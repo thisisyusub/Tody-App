@@ -5,5 +5,9 @@
   "light": "Işık",
   "dark": "Karanlık",
   "system": "Sistem",
-  "settings": "Ayarlar"
+  "settings": "Ayarlar",
+  "english": "İngilizce",
+  "azerbaijani": "Azerice",
+  "turkish": "Türkçe",
+  "language": "Dil"
 }

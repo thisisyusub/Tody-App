@@ -5,5 +5,9 @@
   "light": "Light",
   "dark": "Dark",
   "system": "System",
-  "settings": "Settings"
+  "settings": "Settings",
+  "english": "English",
+  "azerbaijani": "Azerbaijani",
+  "turkish": "Turkish",
+  "language": "Language"
 }
