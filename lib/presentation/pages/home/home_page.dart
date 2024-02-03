@@ -78,10 +78,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const Divider(
-              indent: 20,
-              endIndent: 20,
-            ),
+            // const Divider(
+            //   indent: 20,
+            //   endIndent: 20,
+            // ),
             Flexible(
               child: ListView(
                 children: const [
