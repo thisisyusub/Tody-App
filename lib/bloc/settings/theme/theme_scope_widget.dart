@@ -26,10 +26,10 @@ class ThemeScopeWidget extends StatefulWidget {
 class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
   ThemeMode? _themeMode;
 
-  ThemeMode _handleSystem() {
-    final brightness = MediaQuery.of(context).platformBrightness;
-    return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
-  }
+  // ThemeMode _handleSystem() {
+  //   final brightness = MediaQuery.of(context).platformBrightness;
+  //   return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
+  // }
 
   void changeTo(ThemeMode themeMode) async {
     if (_themeMode == themeMode) return;
@@ -46,29 +46,26 @@ class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
 
   @override
   void didChangeDependencies() {
-    MediaQuery.of(context).platformBrightness;
     super.didChangeDependencies();
 
     try {
       final themeModeIndex = widget.preferences.getInt(AppKeys.themeMode) ?? 0;
       final themeMode = ThemeMode.values[themeModeIndex];
 
-      if (themeMode == ThemeMode.system) {
-        _themeMode = _handleSystem();
-      } else {
-        _themeMode = themeMode;
-      }
+      _themeMode = themeMode;
     } catch (_) {
-      _themeMode = _handleSystem();
+      _themeMode = ThemeMode.system;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final colors = switch (_themeMode) {
+    final brightness = MediaQuery.platformBrightnessOf(context);
+    final colors = switch (_themeMode!) {
       ThemeMode.light => AppColors.light(),
       ThemeMode.dark => AppColors.dark(),
-      _ => AppColors.light(),
+      ThemeMode.system =>
+        brightness == Brightness.dark ? AppColors.dark() : AppColors.light(),
     };
 
     final typography = AppTypography(

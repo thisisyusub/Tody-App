@@ -72,18 +72,24 @@ class SettingsPage extends StatelessWidget {
               chips: [
                 SettingsItem(
                   title: context.l10n.light,
-                  prefix: const Icon(Icons.light_mode),
+                  prefix: const Icon(
+                    Icons.light_mode,
+                    size: 18,
+                  ),
                   type: ThemeMode.light,
                 ),
                 SettingsItem(
                   title: context.l10n.dark,
-                  prefix: const Icon(Icons.dark_mode_rounded),
+                  prefix: const Icon(
+                    Icons.dark_mode_rounded,
+                    size: 18,
+                  ),
                   type: ThemeMode.dark,
                 ),
-                // SettingsItem(
-                //   title: context.l10n.system,
-                //   type: ThemeMode.system,
-                // ),
+                SettingsItem(
+                  title: context.l10n.system,
+                  type: ThemeMode.system,
+                ),
               ],
             ),
           ],
