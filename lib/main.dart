@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           themeMode: theme.themeMode,
-          themeAnimationCurve: Curves.linearToEaseOut,
+          themeAnimationCurve: Curves.fastOutSlowIn,
           theme: ThemeData(
             brightness: Brightness.light,
             extensions: extensions,
