@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
+import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
 import 'package:tody_app/core/rest/http_rest_client.dart';
 import 'package:tody_app/core/rest/rest_client.dart';
 import 'package:tody_app/core/utils/base64_converter.dart';
@@ -55,4 +56,5 @@ Future<void> init() async {
   /// bloc, state management, notifier, viewmodel
   getIt.registerFactory(() => LoginNotifier(getIt()));
   getIt.registerFactory(() => AuthNotifier(getIt()));
+  getIt.registerFactory(() => LocalizationNotifier(getIt()));
 }
