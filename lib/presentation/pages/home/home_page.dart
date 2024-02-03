@@ -5,7 +5,6 @@ import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
-import 'package:tody_app/core/theme/theme_scope_widget.dart';
 import 'package:tody_app/presentation/pages/home/widgets/dynamic_category_item.dart';
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
 
@@ -119,24 +118,6 @@ class _HomePageState extends State<HomePage> {
                   // CategoryItem(),
                 ],
               ),
-            ),
-            ListTile(
-              title: Text(AppLocalizations.of(context).light),
-              onTap: () {
-                ThemeScopeWidget.of(context)!.changeTo(ThemeMode.light);
-              },
-            ),
-            ListTile(
-              title: Text(AppLocalizations.of(context).dark),
-              onTap: () {
-                ThemeScopeWidget.of(context)!.changeTo(ThemeMode.dark);
-              },
-            ),
-            ListTile(
-              title: Text(AppLocalizations.of(context).system),
-              onTap: () {
-                ThemeScopeWidget.of(context)!.changeTo(ThemeMode.system);
-              },
             ),
             InkWell(
               onTap: () {
