@@ -80,10 +80,10 @@ class SettingsPage extends StatelessWidget {
                   prefix: const Icon(Icons.dark_mode_rounded),
                   type: ThemeMode.dark,
                 ),
-                // SettingsItem(
-                //   title: context.l10n.system,
-                //   type: ThemeMode.system,
-                // ),
+                SettingsItem(
+                  title: context.l10n.system,
+                  type: ThemeMode.system,
+                ),
               ],
             ),
           ],
