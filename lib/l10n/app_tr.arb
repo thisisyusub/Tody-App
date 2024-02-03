@@ -9,5 +9,7 @@
   "english": "İngilizce",
   "azerbaijani": "Azerice",
   "turkish": "Türkçe",
-  "language": "Dil"
+  "language": "Dil",
+  "themeMode": "Tema Modu",
+  "general": "Genel"
 }

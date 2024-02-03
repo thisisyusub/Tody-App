@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tody_app/bloc/settings/theme/theme_scope.dart';
+import 'package:tody_app/core/constants/app_keys.dart';
 import 'package:tody_app/core/theme/app_colors.dart';
 import 'package:tody_app/core/theme/app_typography.dart';
-import 'package:tody_app/core/theme/theme_scope.dart';
 
 class ThemeScopeWidget extends StatefulWidget {
   const ThemeScopeWidget({
     super.key,
     required this.child,
+    required this.preferences,
   });
 
   final Widget child;
+  final SharedPreferences preferences;
 
   static ThemeScopeWidgetState? of(BuildContext context) {
     return context.findRootAncestorStateOfType<ThemeScopeWidgetState>();
@@ -22,27 +26,41 @@ class ThemeScopeWidget extends StatefulWidget {
 class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
   ThemeMode? _themeMode;
 
-  @override
-  void initState() {
-    super.initState();
-    _themeMode = ThemeMode.system;
+  ThemeMode _handleSystem() {
+    final brightness = MediaQuery.of(context).platformBrightness;
+    return brightness == Brightness.dark ? ThemeMode.dark : ThemeMode.light;
   }
 
-  void changeTo(ThemeMode themeMode) {
+  void changeTo(ThemeMode themeMode) async {
     if (_themeMode == themeMode) return;
 
-    setState(() {
-      _themeMode = themeMode;
-    });
+    try {
+      final index = ThemeMode.values.indexOf(themeMode);
+      await widget.preferences.setInt(AppKeys.themeMode, index);
+
+      setState(() {
+        _themeMode = themeMode;
+      });
+    } catch (_) {}
   }
 
   @override
-  void didChangeDependencies() async {
+  void didChangeDependencies() {
+    MediaQuery.of(context).platformBrightness;
     super.didChangeDependencies();
 
-    setState(() {
-      _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
-    });
+    try {
+      final themeModeIndex = widget.preferences.getInt(AppKeys.themeMode) ?? 0;
+      final themeMode = ThemeMode.values[themeModeIndex];
+
+      if (themeMode == ThemeMode.system) {
+        _themeMode = _handleSystem();
+      } else {
+        _themeMode = themeMode;
+      }
+    } catch (_) {
+      _themeMode = _handleSystem();
+    }
   }
 
   @override
@@ -99,7 +117,7 @@ class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
     );
 
     return ThemeScope(
-      themeMode: _themeMode ?? ThemeMode.light,
+      themeMode: _themeMode!,
       colors: colors,
       typography: typography,
       child: widget.child,

@@ -43,6 +43,14 @@ class _SettingsBarState<T> extends State<SettingsBar<T>> {
   }
 
   @override
+  void didUpdateWidget(covariant SettingsBar<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      _selectedType = widget.defaultSelectedType;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
