@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
+import 'package:tody_app/bloc/settings/theme/theme_scope.dart';
+import 'package:tody_app/bloc/settings/theme/theme_scope_widget.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
-import 'package:tody_app/core/theme/theme_scope.dart';
-import 'package:tody_app/core/theme/theme_scope_widget.dart';
 import 'package:tody_app/core/utils/extensions/context_ext.dart';
 import 'package:tody_app/presentation/pages/settings/widgets/settings_bar.dart';
 import 'package:tody_app/presentation/pages/settings/widgets/user_details.dart';
@@ -37,7 +37,7 @@ class SettingsPage extends StatelessWidget {
             const UserDetails(),
             const SizedBox(height: 13),
             Text(
-              'General',
+              context.l10n.general,
               style: context.typography.labelLarge.copyWith(
                 color: context.colors.primary,
               ),
@@ -64,7 +64,7 @@ class SettingsPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             SettingsBar<ThemeMode>(
-              title: 'Mode',
+              title: context.l10n.themeMode,
               defaultSelectedType: ThemeScope.of(context).themeMode,
               onChipSelected: (themeMode) {
                 ThemeScopeWidget.of(context)!.changeTo(themeMode);
@@ -80,10 +80,10 @@ class SettingsPage extends StatelessWidget {
                   prefix: const Icon(Icons.dark_mode_rounded),
                   type: ThemeMode.dark,
                 ),
-                SettingsItem(
-                  title: context.l10n.system,
-                  type: ThemeMode.system,
-                ),
+                // SettingsItem(
+                //   title: context.l10n.system,
+                //   type: ThemeMode.system,
+                // ),
               ],
             ),
           ],

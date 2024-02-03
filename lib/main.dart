@@ -7,12 +7,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
+import 'package:tody_app/bloc/settings/theme/theme_scope.dart';
+import 'package:tody_app/bloc/settings/theme/theme_scope_widget.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
-import 'package:tody_app/core/theme/theme_scope.dart';
-import 'package:tody_app/core/theme/theme_scope_widget.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';
 import 'package:tody_app/presentation/pages/settings/settings_page.dart';
-import 'package:tody_app/presentation/settings/settings_scope_widget.dart';
 
 import 'core/constants/routes.dart';
 import 'initialization.dart' as di;
@@ -32,11 +31,9 @@ void main() async {
     // DevicePreview(
     // enabled: true,
     // builder: (context) =>
-    SettingsScopeWidget(
+    ThemeScopeWidget(
       preferences: GetIt.instance<SharedPreferences>(),
-      child: const ThemeScopeWidget(
-        child: MyApp(),
-      ),
+      child: const MyApp(),
     ),
     // ),
   );
@@ -75,6 +72,7 @@ class _MyAppState extends State<MyApp> {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           themeMode: theme.themeMode,
+          themeAnimationCurve: Curves.linearToEaseOut,
           theme: ThemeData(
             brightness: Brightness.light,
             extensions: extensions,

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
-import 'package:tody_app/core/theme/theme_scope.dart';
 import 'package:tody_app/presentation/pages/home/widgets/dynamic_category_item.dart';
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
 
@@ -18,7 +17,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final themeMode = ThemeScope.of(context).themeMode;
     final user = context.watch<UserNotifier>().user;
 
     return Scaffold(
@@ -78,10 +76,10 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            const Divider(
-              indent: 20,
-              endIndent: 20,
-            ),
+            // const Divider(
+            //   indent: 20,
+            //   endIndent: 20,
+            // ),
             Flexible(
               child: ListView(
                 children: const [

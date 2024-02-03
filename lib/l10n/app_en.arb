@@ -9,5 +9,7 @@
   "english": "English",
   "azerbaijani": "Azerbaijani",
   "turkish": "Turkish",
-  "language": "Language"
+  "language": "Language",
+  "themeMode": "Theme Mode",
+  "general": "General"
 }
