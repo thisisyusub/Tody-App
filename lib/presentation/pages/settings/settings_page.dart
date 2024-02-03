@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/core/theme/theme_scope.dart';
 import 'package:tody_app/core/theme/theme_scope_widget.dart';
@@ -42,21 +44,21 @@ class SettingsPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             SettingsBar<Locale>(
-              title: 'Language',
-              defaultSelectedType: const Locale('az'),
-              onChipSelected: (locale) {},
-              chips: const [
+              title: context.l10n.language,
+              defaultSelectedType: context.read<LocalizationNotifier>().locale,
+              onChipSelected: context.read<LocalizationNotifier>().changeTo,
+              chips: [
                 SettingsItem(
-                  title: 'English',
-                  type: Locale('en'),
+                  title: context.l10n.english,
+                  type: const Locale('en'),
                 ),
                 SettingsItem(
-                  title: 'Azerbaijani',
-                  type: Locale('az'),
+                  title: context.l10n.azerbaijani,
+                  type: const Locale('az'),
                 ),
                 SettingsItem(
-                  title: 'Turkish',
-                  type: Locale('tr'),
+                  title: context.l10n.turkish,
+                  type: const Locale('tr'),
                 ),
               ],
             ),

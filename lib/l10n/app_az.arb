@@ -5,6 +5,9 @@
   "light": "Açıq",
   "dark": "Tünd",
   "system": "Sistemə görə",
-  "settings": "Tənzimləmələr"
-
+  "settings": "Tənzimləmələr",
+   "english": "İngiliscə",
+   "azerbaijani": "Azərbaycanca",
+   "turkish": "Türkcə",
+  "language": "Tətbiqin dili"
 }
