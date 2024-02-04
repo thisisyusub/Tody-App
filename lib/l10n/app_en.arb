@@ -11,5 +11,10 @@
   "turkish": "Turkish",
   "language": "Language",
   "themeMode": "Theme Mode",
-  "general": "General"
+  "general": "General",
+  "login": "Login",
+  "username": "Username",
+  "usernameRequired": "Username is required",
+  "password": "Password",
+  "passwordRequired": "Password is required and must be at least 6 characters"
 }

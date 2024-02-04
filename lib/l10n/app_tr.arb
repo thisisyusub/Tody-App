@@ -11,5 +11,10 @@
   "turkish": "Türkçe",
   "language": "Dil",
   "themeMode": "Tema Modu",
-  "general": "Genel"
+  "general": "Genel",
+  "login": "Giriş",
+  "username": "Kullanıcı adı",
+  "usernameRequired": "Kullanıcı adı gerekli",
+  "password": "Şifre",
+  "passwordRequired": "Şifre gereklidir ve en az 6 karakterden oluşmalıdır"
 }

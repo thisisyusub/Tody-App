@@ -5,7 +5,7 @@ import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
-import 'package:tody_app/presentation/pages/login_page.dart';
+import 'package:tody_app/presentation/pages/login/login_page.dart';
 
 import '../../core/constants/assets.dart';
 import 'home/home_page.dart';

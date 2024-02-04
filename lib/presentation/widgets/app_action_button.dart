@@ -25,7 +25,9 @@ class AppActionButton extends StatelessWidget {
           child: Center(
             child: Text(
               title,
-              style: context.typography.labelLarge,
+              style: context.typography.labelLarge.copyWith(
+                color: context.colors.onPrimary,
+              ),
             ),
           ),
         ),

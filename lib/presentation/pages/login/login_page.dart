@@ -1,11 +1,10 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/login/login_state.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
+import 'package:tody_app/core/utils/extensions/context_ext.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -53,12 +52,12 @@ class _LoginPageState extends State<LoginPage> {
 
     final border = OutlineInputBorder(
       borderSide: BorderSide(
-        color: context.colors.onPrimary,
+        color: context.colors.onSurfaceLowBrush,
       ),
     );
 
     final errorBorder = border.copyWith(
-      borderSide: BorderSide(
+      borderSide: const BorderSide(
         color: Colors.redAccent,
       ),
     );
@@ -72,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
         appBar: AppBar(
           backgroundColor: context.colors.surface,
           title: Text(
-            'Login',
+            context.l10n.login,
             style: context.typography.displaySmall,
           ),
         ),
@@ -85,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextFormField(
                   controller: _usernameController,
                   decoration: InputDecoration(
-                    labelText: 'Username',
+                    labelText: context.l10n.username,
                     enabledBorder: border,
                     focusedBorder: border,
                     errorBorder: errorBorder,
@@ -95,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                   textInputAction: TextInputAction.next,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Username is required';
+                      return context.l10n.usernameRequired;
                     }
 
                     return null;
@@ -105,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextFormField(
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    labelText: 'Password',
+                    labelText: context.l10n.password,
                     enabledBorder: border,
                     focusedBorder: border,
                     errorBorder: errorBorder,
@@ -126,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty || value.length < 6) {
-                      return 'Password is required and must be at least 6 characters';
+                      return context.l10n.passwordRequired;
                     }
 
                     return null;
@@ -140,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                   const CircularProgressIndicator()
                 else
                   AppActionButton(
-                    title: 'Login',
+                    title: context.l10n.login,
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {
