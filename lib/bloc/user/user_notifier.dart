@@ -14,7 +14,7 @@ class UserNotifier extends ChangeNotifier {
 
   Future<void> fetchUser() async {
     try {
-      final uri = Uri.http('localhost:8080', '/auth/user');
+      final uri = Uri.http('192.168.100.5:8080', '/auth/user');
       const secureStorage = FlutterSecureStorage();
       final token = await secureStorage.read(key: AppKeys.token);
       RestClient client = HttpRestClient(http.Client());

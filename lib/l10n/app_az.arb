@@ -11,5 +11,10 @@
    "turkish": "Türkcə",
   "language": "Tətbiqin dili",
   "themeMode": "Mövzu rejimi",
-  "general": "Ümumi"
+  "general": "Ümumi",
+  "login": "Daxil ol",
+  "username": "İstifadəçi adı",
+  "usernameRequired": "İstifadəçi adı tələb olunur",
+  "password": "parol",
+  "passwordRequired": "Parol tələb olunur və ən azı 6 simvol olmalıdır"
 }

@@ -15,7 +15,7 @@ import 'package:tody_app/presentation/pages/settings/settings_page.dart';
 
 import 'core/constants/routes.dart';
 import 'initialization.dart' as di;
-import 'presentation/pages/login_page.dart';
+import 'presentation/pages/login/login_page.dart';
 import 'presentation/pages/onboarding_page.dart';
 import 'presentation/pages/splash_page.dart';
 
