@@ -31,9 +31,19 @@ void main() async {
     // DevicePreview(
     // enabled: true,
     // builder: (context) =>
-    ThemeScopeWidget(
-      preferences: GetIt.instance<SharedPreferences>(),
-      child: const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => GetIt.instance<AuthNotifier>()..checkAuth(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => GetIt.instance<LocalizationNotifier>(),
+        ),
+      ],
+      child: ThemeScopeWidget(
+        preferences: GetIt.instance<SharedPreferences>(),
+        child: const MyApp(),
+      ),
     ),
     // ),
   );
@@ -47,6 +57,39 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _routeState = GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    final authNotifier = context.read<AuthNotifier>();
+    authNotifier.addListener(
+      () {
+        final authState = authNotifier.authState;
+
+        switch (authState) {
+          case AuthState.onboarding:
+            _routeState.currentState?.pushNamedAndRemoveUntil(
+              Routes.onboarding.path,
+              (route) => false,
+            );
+          case AuthState.unauthenticated:
+            _routeState.currentState?.pushNamedAndRemoveUntil(
+              Routes.login.path,
+              (route) => false,
+            );
+          case AuthState.authenticated:
+            _routeState.currentState?.pushNamedAndRemoveUntil(
+              Routes.home.path,
+              (route) => false,
+            );
+          default:
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = ThemeScope.of(context);
@@ -55,66 +98,55 @@ class _MyAppState extends State<MyApp> {
       theme.typography,
     ];
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => GetIt.instance<AuthNotifier>()..checkAuth(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => GetIt.instance<LocalizationNotifier>(),
-        ),
-      ],
-      child: Builder(builder: (context) {
-        return MaterialApp(
-          title: 'Tody App',
-          debugShowCheckedModeBanner: false,
-          locale: context.watch<LocalizationNotifier>().locale,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          themeMode: theme.themeMode,
-          themeAnimationCurve: Curves.fastOutSlowIn,
-          theme: ThemeData(
-            brightness: Brightness.light,
-            extensions: extensions,
-            scaffoldBackgroundColor: theme.colors.surface,
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            extensions: extensions,
-            scaffoldBackgroundColor: theme.colors.surface,
-          ),
-          initialRoute: Routes.splash.path,
-          builder: (context, child) {
-            return MediaQuery.withClampedTextScaling(
-              minScaleFactor: 1.0,
-              maxScaleFactor: 1.3,
-              child: child!,
-            );
-          },
-          routes: {
-            Routes.splash.path: (context) => const SplashPage(),
-            Routes.onboarding.path: (context) => const OnBoardingPage(),
-            Routes.login.path: (context) => ChangeNotifierProvider(
-                  create: (context) => GetIt.instance<LoginNotifier>(),
-                  child: const LoginPage(),
-                ),
-            Routes.home.path: (context) => ChangeNotifierProvider(
-                  lazy: true,
-                  create: (context) => UserNotifier()..fetchUser(),
-                  child: const HomePage(),
-                ),
-            Routes.settings.path: (context) {
-              final modalRoute = ModalRoute.of(context)!;
-              final settings = modalRoute.settings;
-
-              return ChangeNotifierProvider.value(
-                value: settings.arguments as UserNotifier,
-                child: const SettingsPage(),
-              );
-            },
-          },
+    return MaterialApp(
+      navigatorKey: _routeState,
+      title: 'Tody App',
+      debugShowCheckedModeBanner: false,
+      locale: context.watch<LocalizationNotifier>().locale,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      themeMode: theme.themeMode,
+      themeAnimationCurve: Curves.fastOutSlowIn,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        extensions: extensions,
+        scaffoldBackgroundColor: theme.colors.surface,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        extensions: extensions,
+        scaffoldBackgroundColor: theme.colors.surface,
+      ),
+      initialRoute: Routes.splash.path,
+      builder: (context, child) {
+        return MediaQuery.withClampedTextScaling(
+          minScaleFactor: 1.0,
+          maxScaleFactor: 1.3,
+          child: child!,
         );
-      }),
+      },
+      routes: {
+        Routes.splash.path: (context) => const SplashPage(),
+        Routes.onboarding.path: (context) => const OnBoardingPage(),
+        Routes.login.path: (context) => ChangeNotifierProvider(
+              create: (context) => GetIt.instance<LoginNotifier>(),
+              child: const LoginPage(),
+            ),
+        Routes.home.path: (context) => ChangeNotifierProvider(
+              lazy: true,
+              create: (context) => UserNotifier()..fetchUser(),
+              child: const HomePage(),
+            ),
+        Routes.settings.path: (context) {
+          final modalRoute = ModalRoute.of(context)!;
+          final settings = modalRoute.settings;
+
+          return ChangeNotifierProvider.value(
+            value: settings.arguments as UserNotifier,
+            child: const SettingsPage(),
+          );
+        },
+      },
     );
   }
 }

@@ -40,10 +40,7 @@ class UserDetails extends StatelessWidget {
             const SizedBox(height: 12),
           ],
           TextButton(
-            onPressed: () {
-              context.read<AuthNotifier>().logOut();
-              Navigator.of(context).pop();
-            },
+            onPressed: context.read<AuthNotifier>().logOut,
             child: Text(
               'Sign out',
               style: context.typography.labelLarge.copyWith(

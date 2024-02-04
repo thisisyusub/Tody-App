@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tody_app/core/constants/app_keys.dart';
 import 'package:tody_app/data/repository/auth_repository.dart';
 
-enum AuthState { initial, authenticated, unauthenticated }
+enum AuthState { initial, onboarding, authenticated, unauthenticated }
 
 class AuthNotifier extends ChangeNotifier {
   AuthNotifier(this.authRepository);
@@ -16,13 +18,29 @@ class AuthNotifier extends ChangeNotifier {
       await Future.delayed(const Duration(seconds: 1));
       final isAuthenticated = await authRepository.isAuthenticated;
 
-      _authState =
-          isAuthenticated ? AuthState.authenticated : AuthState.unauthenticated;
-      notifyListeners();
+      if (isAuthenticated) {
+        _authState = AuthState.authenticated;
+        notifyListeners();
+      } else {
+        _checkIfAppOpenedPreviously();
+      }
     } catch (_) {
-      _authState = AuthState.unauthenticated;
-      notifyListeners();
+      _checkIfAppOpenedPreviously();
     }
+  }
+
+  void _checkIfAppOpenedPreviously() async {
+    final preferences = await SharedPreferences.getInstance();
+    final isAppOpened = preferences.getBool(AppKeys.isAppOpened);
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (isAppOpened == null || !isAppOpened) {
+      _authState = AuthState.onboarding;
+    } else {
+      _authState = AuthState.unauthenticated;
+    }
+
+    notifyListeners();
   }
 
   void userLogged() {
