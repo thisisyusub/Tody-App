@@ -137,7 +137,7 @@ class _AppLightColors extends AppColors {
     super.onPrimaryContainer = const Color(0xFF160067),
     super.secondaryContainer = const Color(0xFFE5DFF9),
     super.onSurfacePressedBrush = const Color.fromRGBO(28, 27, 31, 0.2),
-    super.onSurfaceLowBrush = const Color(0x1c1b1f61),
+    super.onSurfaceLowBrush = const Color.fromRGBO(28, 27, 31, 0.38),
     super.surfaceVariant = const Color(0xfffaf9fb),
   });
 }

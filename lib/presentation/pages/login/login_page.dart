@@ -140,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                 else
                   AppActionButton(
                     title: context.l10n.login,
+                    widthFactor: WidthFactor.sized,
                     onPressed: () {
                       _formKey.currentState!.save();
                       if (_formKey.currentState!.validate()) {

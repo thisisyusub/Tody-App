@@ -16,7 +16,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> login(String username, String password) async {
     try {
-      final uri = Uri.http('192.168.100.5:8080', '/auth/login');
+      final uri = Uri.http('localhost:8080', '/auth/login');
 
       await client.post(
         uri,
@@ -39,7 +39,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String fullName,
   ) async {
     try {
-      final uri = Uri.http('192.168.100.5:8080', '/auth/register');
+      final uri = Uri.http('localhost:8080', '/auth/register');
 
       await client.post(
         uri,

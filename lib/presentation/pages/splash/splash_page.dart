@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 
-import '../../core/constants/assets.dart';
+import '../../../core/constants/assets.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

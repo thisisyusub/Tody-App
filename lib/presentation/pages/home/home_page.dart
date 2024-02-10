@@ -1,11 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
+import 'package:tody_app/presentation/dialogs/list_creation/list_creation_dialog.dart';
 import 'package:tody_app/presentation/pages/home/widgets/dynamic_category_item.dart';
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
+import 'package:tody_app/presentation/pages/home/widgets/user_category_list.dart';
+import 'package:tody_app/presentation/widgets/app_action_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -76,134 +80,18 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-            // const Divider(
-            //   indent: 20,
-            //   endIndent: 20,
-            // ),
-            Flexible(
-              child: ListView(
-                children: const [
-                  DynamicCategoryItem(
-                    title: 'Flutter List',
-                  ),
-                  DynamicCategoryItem(
-                    title: 'Dart List',
-                  ),
-
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                  // CategoryItem(),
-                ],
-              ),
+            const Divider(
+              indent: 20,
+              endIndent: 20,
             ),
+            UserCategoryList(),
             InkWell(
-              onTap: () {
-                // showDialog(
-                //     context: context,
-                //     builder: (context) => AlertDialog(
-                //           title: const Text('New list'),
-                //           content: TextField(
-                //             decoration: InputDecoration(
-                //               labelText: "Enter list title",
-                //               labelStyle: TextStyle(
-                //                   color: Theme.of(context).select(
-                //                 light: AppColors.onSurface.withOpacity(0.38),
-                //                 dark: AppColors.onSurface.withOpacity(0.38),
-                //               )),
-                //               enabledBorder: UnderlineInputBorder(
-                //                 borderSide: BorderSide(
-                //                   color: Theme.of(context).select(
-                //                     light:
-                //                         AppColors.onSurface.withOpacity(0.38),
-                //                     dark: AppColors.onSurface.withOpacity(0.38),
-                //                   ),
-                //                   width: 2.0,
-                //                 ),
-                //               ),
-                //               focusedBorder: UnderlineInputBorder(
-                //                 borderSide: BorderSide(
-                //                   color: Theme.of(context).select(
-                //                     light:
-                //                         AppColors.onSurface.withOpacity(0.38),
-                //                     dark: AppColors.onSurface.withOpacity(0.38),
-                //                   ),
-                //                   width: 2.0,
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //           actions: [
-                //             Row(
-                //               mainAxisAlignment: MainAxisAlignment.end,
-                //               children: [
-                //                 TextButton(
-                //                     onPressed: () {
-                //                       Navigator.of(context).pop();
-                //                     },
-                //                     child: Text(
-                //                       'Cancel',
-                //                       style: TextStyle(
-                //                           color: Theme.of(context).select(
-                //                         light: AppColors.primary,
-                //                         dark: AppColors.primary,
-                //                       )),
-                //                     )),
-                //                 TextButton(
-                //                   onPressed: null,
-                //                   style: TextButton.styleFrom(
-                //                     backgroundColor: Theme.of(context).select(
-                //                       light: AppColors.primary,
-                //                       dark: DarkAppColors.primary,
-                //                     ),
-                //                   ),
-                //                   child: Row(
-                //                     mainAxisAlignment: MainAxisAlignment.start,
-                //                     children: [
-                //                       Icon(
-                //                         Icons.add,
-                //                         color: Theme.of(context).select(
-                //                           light: AppColors.onPrimary,
-                //                           dark: DarkAppColors.onPrimary,
-                //                         ),
-                //                       ),
-                //                       const SizedBox(width: 8),
-                //                       Text(
-                //                         "Create",
-                //                         style: TextStyle(
-                //                           color: Theme.of(context).select(
-                //                             light: AppColors.onPrimary,
-                //                             dark: DarkAppColors.onPrimary,
-                //                           ),
-                //                         ),
-                //                       ),
-                //                     ],
-                //                   ),
-                //                 )
-                //               ],
-                //             )
-                //           ],
-                //         ));
+              onTap: () async {
+                final state = await ListCreationDialog.show(context);
+
+                if (state == CreationState.success) {
+                  setState(() {});
+                }
               },
               child: Padding(
                 padding: const EdgeInsets.only(
