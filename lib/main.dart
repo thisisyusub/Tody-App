@@ -10,6 +10,7 @@ import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope_widget.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
+import 'package:tody_app/counter_page.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';
 import 'package:tody_app/presentation/pages/settings/settings_page.dart';
 
@@ -64,6 +65,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     final authNotifier = context.read<AuthNotifier>();
+
     authNotifier.addListener(
       () {
         final authState = authNotifier.authState;
