@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:tody_app/core/constants/app_keys.dart';
 import 'package:tody_app/core/rest/http_rest_client.dart';
@@ -14,20 +15,11 @@ class UserNotifier extends ChangeNotifier {
 
   Future<void> fetchUser() async {
     try {
-      final uri = Uri.http('localhost:8080', '/auth/user');
-      const secureStorage = FlutterSecureStorage();
-      final token = await secureStorage.read(key: AppKeys.token);
-      RestClient client = HttpRestClient(http.Client());
+      RestClient client = GetIt.instance.get<RestClient>();
 
-      final response = await client.get(
-        uri,
-        headers: {
-          'Authorization': 'Basic $token',
-        },
-      );
+      final response = await client.get('/auth/user');
 
-      final decodedUser = jsonDecode(response.body);
-      final userResponse = User.fromJson(decodedUser['data']);
+      final userResponse = User.fromJson(response.data);
 
       final nameWords = userResponse.fullName.split(' ');
       final buffer = StringBuffer();

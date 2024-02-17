@@ -1,17 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
-import 'package:tody_app/bloc/category_list/category_list_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
+import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';
+import 'package:tody_app/features/category/presentation/views/user_category_list.dart';
 import 'package:tody_app/presentation/dialogs/list_creation/list_creation_dialog.dart';
-import 'package:tody_app/presentation/pages/home/widgets/dynamic_category_item.dart';
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
-import 'package:tody_app/presentation/pages/home/widgets/user_category_list.dart';
-import 'package:tody_app/presentation/widgets/app_action_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -26,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     final user = context.watch<UserNotifier>().user;
 
     return BlocProvider(
-      create: (context) => CategoryListBloc()
+      create: (context) => GetIt.instance.get<CategoryListBloc>()
         ..add(
           CategoryListRequested(),
         ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,9 +11,11 @@ import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope_widget.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
-import 'package:tody_app/counter_page.dart';
+import 'package:tody_app/data/model/category_model.dart';
+import 'package:tody_app/features/category/domain/entity/category_entity.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';
 import 'package:tody_app/presentation/pages/settings/settings_page.dart';
+import 'package:tody_app/presentation/pages/task_list/task_list_page.dart';
 
 import 'core/constants/routes.dart';
 import 'initialization.dart' as di;
@@ -146,6 +149,13 @@ class _MyAppState extends State<MyApp> {
           return ChangeNotifierProvider.value(
             value: settings.arguments as UserNotifier,
             child: const SettingsPage(),
+          );
+        },
+        Routes.taskList.path: (context) {
+          final settings = ModalRoute.of(context)!.settings;
+
+          return TaskListPage(
+            category: settings.arguments as CategoryEntity,
           );
         },
       },
