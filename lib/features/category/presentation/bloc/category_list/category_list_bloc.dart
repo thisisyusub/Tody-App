@@ -20,6 +20,7 @@ class CategoryListBloc extends Bloc<CategoryListEvent, CategoryListState> {
 
         try {
           final categories = await categoryRepository.getCategories();
+
           emit(CategoryListSuccess(categories));
         } on EmptyDataException {
           emit(CategoryListEmpty());

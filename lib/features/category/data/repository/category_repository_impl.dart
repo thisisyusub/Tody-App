@@ -9,11 +9,16 @@ final class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<List<CategoryEntity>> getCategories() async {
-    try {
-      final categories = await categoryRemoteDataSoure.getCategories();
-      return categories.map((category) => category.toEntity()).toList();
-    } catch (_) {
-      rethrow;
-    }
+    final categories = await categoryRemoteDataSoure.getCategories();
+    return categories.map((category) => category.toEntity()).toList();
+  }
+
+  @override
+  Future<void> deleteCategory(int id) => categoryRemoteDataSoure.delete(id);
+
+  @override
+  Future<CategoryEntity> getCategory(int id) async {
+    final category = await categoryRemoteDataSoure.getCategory(id);
+    return category.toEntity();
   }
 }

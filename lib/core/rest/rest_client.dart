@@ -3,7 +3,7 @@ import 'dart:convert';
 class ApiResponse {
   const ApiResponse({
     required this.statusCode,
-    required this.data,
+    this.data,
   });
 
   final int statusCode;
@@ -27,6 +27,12 @@ abstract class RestClient {
   });
 
   Future<ApiResponse> post(
+    String url, {
+    Map<String, String>? headers,
+    Object? body,
+  });
+
+  Future<ApiResponse> delete(
     String url, {
     Map<String, String>? headers,
     Object? body,

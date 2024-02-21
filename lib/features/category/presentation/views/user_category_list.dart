@@ -25,7 +25,10 @@ class UserCategoryList extends StatelessWidget {
                     onTap: () {
                       Navigator.of(context).pushNamed(
                         Routes.taskList.path,
-                        arguments: categories[index],
+                        arguments: {
+                          'categoryId': categories[index].id,
+                          'categoriesBloc': context.read<CategoryListBloc>(),
+                        },
                       );
                     },
                   );
