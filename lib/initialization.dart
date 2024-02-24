@@ -16,6 +16,7 @@ import 'package:tody_app/features/category/data/data_source/category_remote_data
 import 'package:tody_app/features/category/data/repository/category_repository_impl.dart';
 import 'package:tody_app/features/category/domain/repository/category_repository.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_actions/category_actions_bloc.dart';
+import 'package:tody_app/features/category/presentation/bloc/category_creation/list_creation_bloc.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';
 
 final getIt = GetIt.instance;
@@ -89,5 +90,6 @@ Future<void> init() async {
   getIt.registerFactory(() => AuthNotifier(getIt()));
   getIt.registerFactory(() => LocalizationNotifier(getIt()));
   getIt.registerFactory(() => CategoryListBloc(categoryRepository: getIt()));
+  getIt.registerFactory(() => CategoryCreationBloc(getIt()));
   getIt.registerFactory(() => CategoryActionsBloc(categoryRepository: getIt()));
 }

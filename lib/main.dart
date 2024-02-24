@@ -11,7 +11,6 @@ import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope_widget.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
-import 'package:tody_app/features/category/domain/entity/category_entity.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_actions/category_actions_bloc.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tody_app/bloc/list_creation/list_creation_bloc.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
+import 'package:tody_app/features/category/presentation/bloc/category_creation/list_creation_bloc.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';
+import 'package:tody_app/initialization.dart';
 import 'package:tody_app/shared/widgets/app_base_dialog.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
-
-enum CreationState { success, failure }
 
 class ListCreationDialog extends StatefulWidget {
   const ListCreationDialog({super.key});
@@ -17,7 +16,7 @@ class ListCreationDialog extends StatefulWidget {
       builder: (_) => BlocProvider.value(
         value: context.read<CategoryListBloc>(),
         child: BlocProvider(
-          create: (context) => ListCreationBloc(),
+          create: (context) => getIt.get<CategoryCreationBloc>(),
           child: const ListCreationDialog(),
         ),
       ),
@@ -33,7 +32,7 @@ class _ListCreationDialogState extends State<ListCreationDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<ListCreationBloc, ListCreationState>(
+    return BlocListener<CategoryCreationBloc, ListCreationState>(
       listener: (context, state) {
         if (state is ListCreationSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -76,7 +75,7 @@ class _ListCreationDialogState extends State<ListCreationDialog> {
                 ),
               ),
             ),
-            BlocBuilder<ListCreationBloc, ListCreationState>(
+            BlocBuilder<CategoryCreationBloc, ListCreationState>(
               builder: (context, state) {
                 if (state is ListCreationFailure) {
                   return Column(
@@ -97,7 +96,7 @@ class _ListCreationDialogState extends State<ListCreationDialog> {
             ),
           ],
         ),
-        action: BlocBuilder<ListCreationBloc, ListCreationState>(
+        action: BlocBuilder<CategoryCreationBloc, ListCreationState>(
           builder: (context, state) {
             if (state is ListCreationInProgress) {
               return const CircularProgressIndicator.adaptive();
@@ -112,7 +111,7 @@ class _ListCreationDialogState extends State<ListCreationDialog> {
               title: 'Create',
               onPressed: () {
                 if (_titleController.text.trim().isNotEmpty) {
-                  context.read<ListCreationBloc>().add(
+                  context.read<CategoryCreationBloc>().add(
                         NewListCreateRequested(_titleController.text),
                       );
                 }

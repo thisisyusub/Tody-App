@@ -38,6 +38,12 @@ abstract class RestClient {
     Object? body,
   });
 
+  Future<ApiResponse> patch(
+    String url, {
+    Map<String, String>? headers,
+    Object? body,
+  });
+
   Uri buildUri(String path) {
     if (baseUrl != null) {
       return Uri.http(baseUrl!, path);

@@ -17,3 +17,12 @@ class CategoryDetailsRequested extends CategoryActionsEvent {
 }
 
 class CategoryDeleteRequested extends CategoryActionsEvent {}
+
+class CategoryUpdateRequested extends CategoryActionsEvent {
+  const CategoryUpdateRequested(this.title);
+
+  final String title;
+
+  @override
+  List<Object?> get props => [title];
+}

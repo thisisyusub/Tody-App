@@ -18,12 +18,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     try {
       await client.post(
         '/auth/login',
-        body: jsonEncode(
-          AuthRequestModel(
-            username: username,
-            password: password,
-          ).toJson(),
-        ),
+        body: AuthRequestModel(
+          username: username,
+          password: password,
+        ).toJson(),
       );
     } on Object {
       rethrow;

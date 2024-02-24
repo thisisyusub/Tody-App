@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_actions/category_actions_bloc.dart';
 import 'package:tody_app/features/category/presentation/views/category_remove_dialog.dart';
+import 'package:tody_app/features/category/presentation/views/category_renaming_dialog.dart';
 
 class TaskListPage extends StatelessWidget {
   const TaskListPage({super.key});
@@ -36,7 +37,9 @@ class TaskListPage extends StatelessWidget {
             actions: [
               if (state is CategoryActionSuccess)
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    CategoryRenamingDialog.show(context);
+                  },
                   icon: const Icon(Icons.drive_file_rename_outline),
                 ),
               if (state is CategoryActionSuccess)

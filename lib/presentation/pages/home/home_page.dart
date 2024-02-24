@@ -7,7 +7,7 @@ import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';
 import 'package:tody_app/features/category/presentation/views/user_category_list.dart';
-import 'package:tody_app/presentation/dialogs/list_creation/list_creation_dialog.dart';
+import 'package:tody_app/features/category/presentation/views/list_creation_dialog.dart';
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
 
 class HomePage extends StatefulWidget {

@@ -40,6 +40,19 @@ final class HttpRestClient extends RestClient {
       );
 
   @override
+  Future<ApiResponse> patch(
+    String url, {
+    Map<String, String>? headers,
+    Object? body,
+  }) =>
+      _handleRequest(
+        url,
+        requestType: _HttpRequestType.patch,
+        headers: headers,
+        body: body,
+      );
+
+  @override
   Future<ApiResponse> delete(
     String url, {
     Map<String, String>? headers,
@@ -79,7 +92,7 @@ final class HttpRestClient extends RestClient {
               if (generalHeaders != null) ...generalHeaders,
               if (headers != null) ...headers,
             },
-            body: body,
+            body: jsonEncode(body),
           );
         case _HttpRequestType.delete:
           response = await client.delete(
@@ -97,7 +110,7 @@ final class HttpRestClient extends RestClient {
               if (generalHeaders != null) ...generalHeaders,
               if (headers != null) ...headers,
             },
-            body: body,
+            body: jsonEncode(body),
           );
         case _HttpRequestType.put:
           response = await client.put(
