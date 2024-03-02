@@ -75,6 +75,12 @@ class ThemeScopeWidgetState extends State<ThemeScopeWidget> {
         fontWeight: FontWeight.w400,
         color: colors.onSurface,
       ),
+      displayLarge: TextStyle(
+        fontSize: 57,
+        height: 64 / 57,
+        fontWeight: FontWeight.w400,
+        color: colors.onSurface,
+      ),
       labelLarge: TextStyle(
         fontSize: 14,
         height: 20 / 14,

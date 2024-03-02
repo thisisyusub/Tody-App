@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/login/login_state.dart';
+import 'package:tody_app/core/constants/responsive_builder.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
 import 'package:tody_app/core/utils/extensions/context_ext.dart';
 import 'package:tody_app/presentation/widgets/app_action_button.dart';
@@ -68,90 +69,113 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         backgroundColor: context.colors.surface,
-        appBar: AppBar(
-          backgroundColor: context.colors.surface,
-          title: Text(
-            context.l10n.login,
-            style: context.typography.displaySmall,
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: context.l10n.username,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: errorBorder,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    context.l10n.login,
+                    style: context.typography.displaySmall,
                   ),
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return context.l10n.usernameRequired;
-                    }
+                  const SizedBox(height: 16),
+                  ResponsiveBuilder(
+                    builder: (context, deviceType) {
+                      return SizedBox(
+                        width: switch (deviceType) {
+                          DeviceType.desktop => 300,
+                          _ => double.infinity,
+                        },
+                        child: TextFormField(
+                          controller: _usernameController,
+                          decoration: InputDecoration(
+                            labelText: context.l10n.username,
+                            enabledBorder: border,
+                            focusedBorder: border,
+                            errorBorder: errorBorder,
+                            focusedErrorBorder: errorBorder,
+                          ),
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return context.l10n.usernameRequired;
+                            }
 
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: context.l10n.password,
-                    enabledBorder: border,
-                    focusedBorder: border,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: errorBorder,
-                    errorMaxLines: 2,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty || value.length < 6) {
-                      return context.l10n.passwordRequired;
-                    }
-
-                    return null;
-                  },
-                  keyboardType: TextInputType.visiblePassword,
-                  obscureText: !_isPasswordVisible,
-                  obscuringCharacter: '*',
-                ),
-                const SizedBox(height: 32),
-                if (loginState is LoadingState)
-                  const CircularProgressIndicator()
-                else
-                  AppActionButton(
-                    title: context.l10n.login,
-                    widthFactor: WidthFactor.sized,
-                    onPressed: () {
-                      _formKey.currentState!.save();
-                      if (_formKey.currentState!.validate()) {
-                        context.read<LoginNotifier>().login(
-                              username: _usernameController.text.trim(),
-                              password: _passwordController.text.trim(),
-                            );
-                      }
+                            return null;
+                          },
+                        ),
+                      );
                     },
                   ),
-              ],
+                  const SizedBox(height: 24),
+                  ResponsiveBuilder(
+                    builder: (context, deviceType) {
+                      return SizedBox(
+                        width: switch (deviceType) {
+                          DeviceType.desktop => 300,
+                          _ => double.infinity,
+                        },
+                        child: TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: context.l10n.password,
+                            enabledBorder: border,
+                            focusedBorder: border,
+                            errorBorder: errorBorder,
+                            focusedErrorBorder: errorBorder,
+                            errorMaxLines: 2,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _isPasswordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                });
+                              },
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null ||
+                                value.isEmpty ||
+                                value.length < 6) {
+                              return context.l10n.passwordRequired;
+                            }
+
+                            return null;
+                          },
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: !_isPasswordVisible,
+                          obscuringCharacter: '*',
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 32),
+                  if (loginState is LoadingState)
+                    const CircularProgressIndicator()
+                  else
+                    AppActionButton(
+                      title: context.l10n.login,
+                      widthFactor: WidthFactor.sized,
+                      onPressed: () {
+                        _formKey.currentState!.save();
+                        if (_formKey.currentState!.validate()) {
+                          context.read<LoginNotifier>().login(
+                                username: _usernameController.text.trim(),
+                                password: _passwordController.text.trim(),
+                              );
+                        }
+                      },
+                    ),
+                ],
+              ),
             ),
           ),
         ),

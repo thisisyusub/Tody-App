@@ -4,6 +4,7 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
   AppTypography({
     required this.labelLarge,
     required this.displaySmall,
+    required this.displayLarge,
     required this.titleMedium,
     required this.titleLarge,
     required this.bodyLarge,
@@ -16,6 +17,7 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
 
   /// display
   final TextStyle displaySmall;
+  final TextStyle displayLarge;
 
   /// title
   final TextStyle titleMedium;
@@ -30,6 +32,7 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
   ThemeExtension<AppTypography> copyWith({
     final TextStyle? labelLarge,
     final TextStyle? displaySmall,
+    final TextStyle? displayLarge,
     final TextStyle? titleMedium,
     final TextStyle? titleLarge,
     final TextStyle? bodyLarge,
@@ -39,6 +42,7 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
     return AppTypography(
       labelLarge: labelLarge ?? this.labelLarge,
       displaySmall: displaySmall ?? this.displaySmall,
+      displayLarge: displayLarge ?? this.displayLarge,
       titleMedium: titleMedium ?? this.titleMedium,
       titleLarge: titleLarge ?? this.titleLarge,
       bodyLarge: bodyLarge ?? this.bodyLarge,
@@ -59,6 +63,7 @@ interface class AppTypography extends ThemeExtension<AppTypography> {
     return AppTypography(
       labelLarge: TextStyle.lerp(labelLarge, other.labelLarge, t)!,
       displaySmall: TextStyle.lerp(displaySmall, other.displaySmall, t)!,
+      displayLarge: TextStyle.lerp(displayLarge, other.displayLarge, t)!,
       titleMedium: TextStyle.lerp(titleMedium, other.titleMedium, t)!,
       titleLarge: TextStyle.lerp(titleLarge, other.titleLarge, t)!,
       bodyLarge: TextStyle.lerp(bodyLarge, other.bodyLarge, t)!,

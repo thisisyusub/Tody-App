@@ -15,14 +15,16 @@ interface class AppColors extends ThemeExtension<AppColors> {
     required this.onSurfacePressedBrush,
     required this.onSurfaceLowBrush,
     required this.surfaceVariant,
+    required this.primaryVariantLight,
+    required this.primarySelectedBrush,
   });
 
   factory AppColors.light() {
-    return _AppLightColors();
+    return AppLightColors();
   }
 
   factory AppColors.dark() {
-    return _AppDarkColors();
+    return AppDarkColors();
   }
 
   final Color surface;
@@ -38,6 +40,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
   final Color onSurfacePressedBrush;
   final Color onSurfaceLowBrush;
   final Color surfaceVariant;
+  final Color primaryVariantLight;
+  final Color primarySelectedBrush;
 
   @override
   ThemeExtension<AppColors> copyWith({
@@ -54,6 +58,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
     final Color? onSurfacePressedBrush,
     final Color? onSurfaceLowBrush,
     final Color? surfaceVariant,
+    final Color? primaryVariantLight,
+    final Color? primarySelectedBrush,
   }) {
     return AppColors(
       surface: surface ?? this.surface,
@@ -70,6 +76,8 @@ interface class AppColors extends ThemeExtension<AppColors> {
           onSurfacePressedBrush ?? this.onSurfacePressedBrush,
       onSurfaceLowBrush: onSurfaceLowBrush ?? this.onSurfaceLowBrush,
       surfaceVariant: surfaceVariant ?? this.surfaceVariant,
+      primaryVariantLight: primaryVariantLight ?? this.primaryVariantLight,
+      primarySelectedBrush: primarySelectedBrush ?? this.primarySelectedBrush,
     );
   }
 
@@ -120,12 +128,23 @@ interface class AppColors extends ThemeExtension<AppColors> {
         other.surfaceVariant,
         t,
       )!,
+      primaryVariantLight: Color.lerp(
+        primaryVariantLight,
+        other.primaryVariantLight,
+        t,
+      )!,
+      primarySelectedBrush: Color.lerp(
+        primarySelectedBrush,
+        other.primarySelectedBrush,
+        t,
+      )!,
     );
   }
 }
 
-class _AppLightColors extends AppColors {
-  _AppLightColors({
+@protected
+class AppLightColors extends AppColors {
+  AppLightColors({
     super.surface = const Color(0xFFFFFFFF),
     super.primary = const Color(0xFF5946D2),
     super.onPrimary = const Color(0xFFFFFFFF),
@@ -139,11 +158,14 @@ class _AppLightColors extends AppColors {
     super.onSurfacePressedBrush = const Color.fromRGBO(28, 27, 31, 0.2),
     super.onSurfaceLowBrush = const Color.fromRGBO(28, 27, 31, 0.38),
     super.surfaceVariant = const Color(0xfffaf9fb),
+    super.primaryVariantLight = const Color(0xFFB0A2F2),
+    super.primarySelectedBrush = const Color.fromRGBO(89, 70, 210, 0.08),
   });
 }
 
-class _AppDarkColors extends AppColors {
-  _AppDarkColors({
+@protected
+class AppDarkColors extends AppColors {
+  AppDarkColors({
     super.surface = const Color(0xFF201F24),
     super.primary = const Color(0xFF5946D2),
     super.onPrimary = const Color(0xFFFFFFFF),
@@ -157,5 +179,7 @@ class _AppDarkColors extends AppColors {
     super.onSurfacePressedBrush = const Color.fromRGBO(230, 225, 229, 0.2),
     super.onSurfaceLowBrush = const Color(0x61e6e1e5),
     super.surfaceVariant = const Color(0xff49454f),
+    super.primaryVariantLight = const Color(0xff544794),
+    super.primarySelectedBrush = const Color.fromRGBO(200, 191, 255, 0.08),
   });
 }
