@@ -3,7 +3,8 @@ enum Routes {
   onboarding(path: '/onboarding'),
   login(path: '/login'),
   home(path: '/home'),
-  settings(path: '/settings');
+  settings(path: '/settings'),
+  taskList(path: '/taskList');
 
   const Routes({required this.path});
 
