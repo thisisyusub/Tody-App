@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +14,11 @@ import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope.dart';
 import 'package:tody_app/bloc/settings/theme/theme_scope_widget.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
+import 'package:tody_app/features/category/presentation/bloc/category_actions/category_actions_bloc.dart';
+import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';
 import 'package:tody_app/presentation/pages/home/home_page.dart';
 import 'package:tody_app/presentation/pages/settings/settings_page.dart';
+import 'package:tody_app/features/category/presentation/views/task_list_view.dart';
 
 import 'core/constants/routes.dart';
 import 'initialization.dart' as di;
@@ -67,6 +71,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     final authNotifier = context.read<AuthNotifier>();
+
     authNotifier.addListener(
       () {
         final authState = authNotifier.authState;
@@ -147,6 +152,27 @@ class _MyAppState extends State<MyApp> {
           return ChangeNotifierProvider.value(
             value: settings.arguments as UserNotifier,
             child: const SettingsPage(),
+          );
+        },
+        Routes.taskList.path: (context) {
+          final arguments = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => GetIt.instance<CategoryActionsBloc>()
+                  ..add(
+                    CategoryDetailsRequested(
+                      arguments['categoryId'] as int,
+                    ),
+                  ),
+              ),
+              BlocProvider.value(
+                value: arguments['categoriesBloc'] as CategoryListBloc,
+              ),
+            ],
+            child: const TaskListPage(),
           );
         },
       },

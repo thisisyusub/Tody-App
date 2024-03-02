@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/constants/routes.dart';
 import 'package:tody_app/core/theme/theme_ext.dart';
-import 'package:tody_app/presentation/dialogs/list_creation/list_creation_dialog.dart';
+import 'package:tody_app/features/category/presentation/views/list_creation_dialog.dart';
+import 'package:tody_app/features/category/presentation/views/user_category_list.dart';
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
-import 'package:tody_app/presentation/pages/home/widgets/user_category_list.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});

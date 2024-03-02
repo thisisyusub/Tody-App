@@ -10,12 +10,14 @@ class AppActionButton extends StatelessWidget {
     required this.onPressed,
     this.prefix,
     this.widthFactor = WidthFactor.full,
+    this.color,
   });
 
   final String title;
   final VoidCallback? onPressed;
   final Widget? prefix;
   final WidthFactor widthFactor;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class AppActionButton extends StatelessWidget {
     final leftPadding = prefix != null ? 16.0 : 24.0;
 
     return Material(
-      color: context.colors.primary,
+      color: color ?? context.colors.primary,
       borderRadius: BorderRadius.circular(20),
       elevation: 4.0,
       child: InkWell(
