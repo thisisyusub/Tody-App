@@ -8,6 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tody_app/app_router.dart';
 import 'package:tody_app/bloc/auth/auth_notifier.dart';
 import 'package:tody_app/bloc/login/login_notifier.dart';
 import 'package:tody_app/bloc/settings/localization/localization_notifier.dart';
@@ -64,40 +65,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _routeState = GlobalKey<NavigatorState>();
-
-  @override
-  void initState() {
-    super.initState();
-
-    final authNotifier = context.read<AuthNotifier>();
-
-    authNotifier.addListener(
-      () {
-        final authState = authNotifier.authState;
-
-        switch (authState) {
-          case AuthState.onboarding:
-            _routeState.currentState?.pushNamedAndRemoveUntil(
-              Routes.onboarding.path,
-              (route) => false,
-            );
-          case AuthState.unauthenticated:
-            _routeState.currentState?.pushNamedAndRemoveUntil(
-              Routes.login.path,
-              (route) => false,
-            );
-          case AuthState.authenticated:
-            _routeState.currentState?.pushNamedAndRemoveUntil(
-              Routes.home.path,
-              (route) => false,
-            );
-          default:
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = ThemeScope.of(context);
@@ -106,9 +73,11 @@ class _MyAppState extends State<MyApp> {
       theme.typography,
     ];
 
-    return MaterialApp(
-      navigatorKey: _routeState,
+    return MaterialApp.router(
       title: 'Tody App',
+      routerConfig: AppRouter(
+        authNotifier: context.read<AuthNotifier>(),
+      ).instance,
       debugShowCheckedModeBanner: false,
       locale: context.watch<LocalizationNotifier>().locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -125,7 +94,6 @@ class _MyAppState extends State<MyApp> {
         extensions: extensions,
         scaffoldBackgroundColor: theme.colors.surface,
       ),
-      initialRoute: Routes.splash.path,
       builder: (context, child) {
         return MediaQuery.withClampedTextScaling(
           minScaleFactor: 1.0,
@@ -133,49 +101,43 @@ class _MyAppState extends State<MyApp> {
           child: child!,
         );
       },
-      routes: {
-        Routes.splash.path: (context) => const SplashPage(),
-        Routes.onboarding.path: (context) => const OnBoardingPage(),
-        Routes.login.path: (context) => ChangeNotifierProvider(
-              create: (context) => GetIt.instance<LoginNotifier>(),
-              child: const LoginPage(),
-            ),
-        Routes.home.path: (context) => ChangeNotifierProvider(
-              lazy: true,
-              create: (context) => UserNotifier()..fetchUser(),
-              child: const HomePage(),
-            ),
-        Routes.settings.path: (context) {
-          final modalRoute = ModalRoute.of(context)!;
-          final settings = modalRoute.settings;
+      // routes: {
+      //   Routes.home.path: (context) => ChangeNotifierProvider(
+      //         lazy: true,
+      //         create: (context) => UserNotifier()..fetchUser(),
+      //         child: const HomePage(),
+      //       ),
+      //   Routes.settings.path: (context) {
+      //     final modalRoute = ModalRoute.of(context)!;
+      //     final settings = modalRoute.settings;
 
-          return ChangeNotifierProvider.value(
-            value: settings.arguments as UserNotifier,
-            child: const SettingsPage(),
-          );
-        },
-        Routes.taskList.path: (context) {
-          final arguments = ModalRoute.of(context)!.settings.arguments
-              as Map<String, dynamic>;
+      //     return ChangeNotifierProvider.value(
+      //       value: settings.arguments as UserNotifier,
+      //       child: const SettingsPage(),
+      //     );
+      //   },
+      //   Routes.taskList.path: (context) {
+      //     final arguments = ModalRoute.of(context)!.settings.arguments
+      //         as Map<String, dynamic>;
 
-          return MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                create: (context) => GetIt.instance<CategoryActionsBloc>()
-                  ..add(
-                    CategoryDetailsRequested(
-                      arguments['categoryId'] as int,
-                    ),
-                  ),
-              ),
-              BlocProvider.value(
-                value: arguments['categoriesBloc'] as CategoryListBloc,
-              ),
-            ],
-            child: const TaskListPage(),
-          );
-        },
-      },
+      //     return MultiBlocProvider(
+      //       providers: [
+      //         BlocProvider(
+      //           create: (context) => GetIt.instance<CategoryActionsBloc>()
+      //             ..add(
+      //               CategoryDetailsRequested(
+      //                 arguments['categoryId'] as int,
+      //               ),
+      //             ),
+      //         ),
+      //         BlocProvider.value(
+      //           value: arguments['categoriesBloc'] as CategoryListBloc,
+      //         ),
+      //       ],
+      //       child: const TaskListPage(),
+      //     );
+      //   },
+      // },
     );
   }
 }

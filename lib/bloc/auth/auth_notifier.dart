@@ -48,6 +48,13 @@ class AuthNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void onboardingChecked() async {
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.setBool(AppKeys.isAppOpened, true);
+    _authState = AuthState.unauthenticated;
+    notifyListeners();
+  }
+
   void logOut() async {
     try {
       await authRepository.logOut();

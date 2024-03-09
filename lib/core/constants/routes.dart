@@ -2,7 +2,7 @@ enum Routes {
   splash(path: '/splash'),
   onboarding(path: '/onboarding'),
   login(path: '/login'),
-  home(path: '/home'),
+  home(path: '/'),
   settings(path: '/settings'),
   taskList(path: '/taskList');
 

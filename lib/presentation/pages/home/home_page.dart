@@ -8,7 +8,12 @@ import 'package:tody_app/presentation/pages/home/widgets/home_view.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -30,19 +35,7 @@ class _HomePageState extends State<HomePage> {
                 const Expanded(child: HomeView()),
                 Expanded(
                   flex: 4,
-                  child: MultiBlocProvider(
-                    providers: [
-                      BlocProvider.value(
-                        value: context.read<CategoryListBloc>(),
-                      ),
-                      BlocProvider(
-                        create: (context) =>
-                            GetIt.instance<CategoryActionsBloc>()
-                              ..add(const CategoryDetailsRequested(67)),
-                      ),
-                    ],
-                    child: const TaskListPage(),
-                  ),
+                  child: widget.child,
                 ),
               ],
             );
