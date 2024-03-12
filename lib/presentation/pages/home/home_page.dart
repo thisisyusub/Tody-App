@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tody_app/features/category/presentation/bloc/category_actions/category_actions_bloc.dart';
-import 'package:tody_app/features/category/presentation/views/task_list_view.dart';
 import 'package:tody_app/core/constants/responsive_builder.dart';
 import 'package:tody_app/presentation/pages/home/widgets/home_view.dart';
 import 'package:tody_app/features/category/presentation/bloc/category_list/category_list_bloc.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tody_app/bloc/user/user_notifier.dart';
 import 'package:tody_app/core/constants/routes.dart';
@@ -9,7 +10,9 @@ import 'package:tody_app/features/category/presentation/views/user_category_list
 import 'package:tody_app/presentation/pages/home/widgets/static_category_item.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  const HomeView({
+    super.key,
+  });
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -68,7 +71,9 @@ class _HomeViewState extends State<HomeView> {
                         color: context.colors.error,
                       ),
                       title: AppLocalizations.of(context).important,
-                      onTap: () {},
+                      onTap: () {
+                        context.go(Routes.importantTasks.path);
+                      },
                     ),
                     StaticCategoryItem(
                       prefix: Icon(

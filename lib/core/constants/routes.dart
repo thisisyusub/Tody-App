@@ -4,7 +4,9 @@ enum Routes {
   login(path: '/login'),
   home(path: '/'),
   settings(path: '/settings'),
-  taskList(path: '/taskList');
+  taskList(path: '/taskList'),
+  importantTasks(path: '/important-tasks'),
+  categoriesById(path: '/categories/:id');
 
   const Routes({required this.path});
 
