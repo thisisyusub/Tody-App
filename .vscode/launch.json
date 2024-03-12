@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Web (debug)",
+            "type": "dart",
+            "request": "launch",
+            "flutterMode": "debug",
+            "args": [
+                "--web-browser-flag",
+                "--disable-web-security",
+            ],
+            "deviceId": "chrome"
+        }
+    ]
+}
